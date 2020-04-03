@@ -11,10 +11,9 @@ class MyApp extends StatelessWidget {
       title: 'App Contábil',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
-
+        primarySwatch: Colors.deepPurple,
       ),
       home: LoginPage(),
-      );
+    );
   }
 }
