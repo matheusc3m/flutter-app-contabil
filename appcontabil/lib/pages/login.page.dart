@@ -16,58 +16,37 @@ class LoginPage extends StatelessWidget {
           ]),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(
               height: 80,
             ),
             Padding(
               padding: EdgeInsets.all(20),
-              child: Column(
+              child: Column( 
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "Login",
-                    style: TextStyle(color: Colors.white, fontSize: 40),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Bem vindo!",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
+                  children: <Widget>[
+                    Text("Seja Bem vindo!",
+                    style: TextStyle(color: Colors.white, fontSize: 30),
+                    ),
                 ],
               ),
             ),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(60),
-                    topRight: Radius.circular(60),
-                  ),
-                ),
                 child: Padding(
                   padding: EdgeInsets.all(30),
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height: 60,
+                        height: 20,
                       ),
                       Container(
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.fromRGBO(225, 95, 27, .3),
-                                blurRadius: 20,
-                                offset: Offset(0, 10),
-                              ),
-                            ]),
+                          color: Colors.white,                          
+                          borderRadius: BorderRadius.circular(5),
+                        ),
                         child: Column(
                           children: <Widget>[
                             Container(
@@ -125,11 +104,7 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 30),
-                      Text(
-                        "Logue com as redes sociais",
-                        style: TextStyle(color: Colors.grey),
-                      ),
+
                       SizedBox(height: 30),
                       Row(
                         children: <Widget>[
