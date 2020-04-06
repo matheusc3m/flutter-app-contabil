@@ -112,7 +112,6 @@ class LoginPage extends StatelessWidget {
                           height: 40,
                         ),
                         FadeAnimation(
-<<<<<<< HEAD
                             1.5,
                             FlatButton(
                               child: Text(
@@ -121,14 +120,6 @@ class LoginPage extends StatelessWidget {
                               ),
                               onPressed: () {},
                             )),
-=======
-                          1.5,
-                          Text(
-                            "Esqueceu a senha?",
-                            style: TextStyle(color: Colors.grey),
-                          )
-                        ),
->>>>>>> 50b7addbb1f432b3da8a151c489091a0a2b730e4
                         SizedBox(
                           height: 40,
                         ),
