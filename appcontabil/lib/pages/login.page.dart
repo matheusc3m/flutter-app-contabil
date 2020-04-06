@@ -105,9 +105,12 @@ class LoginPage extends StatelessWidget {
                         ),
                         FadeAnimation(
                             1.5,
-                            Text(
-                              "Esqueceu a senha?",
-                              style: TextStyle(color: Colors.grey),
+                            FlatButton(
+                              child: Text(
+                                "Esqueceu a senha?",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              onPressed: () {},
                             )),
                         SizedBox(
                           height: 40,
@@ -119,18 +122,46 @@ class LoginPage extends StatelessWidget {
                               margin: EdgeInsets.symmetric(horizontal: 50),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
-                                  color: Colors.deepPurple[900]),
-                              child: Center(
-                                child: Text(
-                                  "Login",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                                  color: Colors.blue[900]),
+                              child: FlatButton(
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Text("Login",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center),
                                 ),
+                                onPressed: () {},
                               ),
                             )),
                         SizedBox(
-                          height: 50,
+                          height: 10,
+                        ),
+                        FadeAnimation(
+                            1.6,
+                            Container(
+                              height: 50,
+                              margin: EdgeInsets.symmetric(horizontal: 50),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.purple[900]),
+                              child: FlatButton(
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Text("Criar Conta",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center),
+                                ),
+                                onPressed: () {},
+                              ),
+                            )),
+                        SizedBox(
+                          height: 30,
                         ),
                         FadeAnimation(
                             1.7,
@@ -151,13 +182,14 @@ class LoginPage extends StatelessWidget {
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
                                         color: Colors.blue),
-                                    child: Center(
+                                    child: FlatButton(
                                       child: Text(
                                         "Facebook",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
                                       ),
+                                      onPressed: () {},
                                     ),
                                   )),
                             ),
@@ -171,14 +203,15 @@ class LoginPage extends StatelessWidget {
                                     height: 50,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
-                                        color: Colors.black),
-                                    child: Center(
+                                        color: Colors.white),
+                                    child: FlatButton(
                                       child: Text(
-                                        "Github",
+                                        "Google",
                                         style: TextStyle(
-                                            color: Colors.white,
+                                            color: Colors.black,
                                             fontWeight: FontWeight.bold),
                                       ),
+                                      onPressed: () {},
                                     ),
                                   )),
                             )
