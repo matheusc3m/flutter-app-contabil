@@ -58,7 +58,7 @@ class LoginPage extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         SizedBox(
-                          height: 60,
+                          height: 0.50,
                         ),
                         FadeAnimation(
                           1.4,
@@ -109,7 +109,7 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 40,
+                          height: 0.40,
                         ),
                         FadeAnimation(
                             1.5,
@@ -121,47 +121,32 @@ class LoginPage extends StatelessWidget {
                               onPressed: () {},
                             )),
                         SizedBox(
-                          height: 40,
+                          height: 0.40,
                         ),
                         FadeAnimation(
-<<<<<<< HEAD
-                            1.6,
-                            Container(
-                              height: 50,
-                              margin: EdgeInsets.symmetric(horizontal: 50),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.blue[900]),
-                              child: FlatButton(
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: Text("Login",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      textAlign: TextAlign.center),
-=======
                           1.6,
                           Container(
                             height: 50,
                             margin: EdgeInsets.symmetric(horizontal: 50),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50),
-                              color: Colors.deepPurple[900]
-                            ),
-                            child: Center(
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold
->>>>>>> 50b7addbb1f432b3da8a151c489091a0a2b730e4
+                              color: Colors.deepPurple[900]),
+                            child: FlatButton(
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Text("Login",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center
                                 ),
-                                onPressed: () {},
                               ),
+                            onPressed: () {},
                             ),
                           )
+                          
+
                         ),
                         SizedBox(
                           height: 10,
@@ -200,85 +185,70 @@ class LoginPage extends StatelessWidget {
                         SizedBox(
                           height: 30,
                         ),
+                        
+                        
+                        
                         Row(
                           children: <Widget>[
                             Expanded(
                               child: FadeAnimation(
-<<<<<<< HEAD
-                                  1.8,
-                                  Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: Colors.blue),
-                                    child: FlatButton(
-                                      child: Text(
-                                        "Facebook",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-=======
                                 1.8,
                                 Container(
                                   height: 50,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(50),
-                                    color: Colors.blue
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "Facebook",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold
->>>>>>> 50b7addbb1f432b3da8a151c489091a0a2b730e4
+                                    color: Colors.blue),
+                                  child: FlatButton(
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Text("Facebook",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.center
                                       ),
-                                      onPressed: () {},
                                     ),
+                                  onPressed: () {},
                                   ),
                                 )
                               ),
                             ),
                             SizedBox(
-                              width: 30,
+                              width: 20,
                             ),
+
+
+
                             Expanded(
                               child: FadeAnimation(
-<<<<<<< HEAD
-                                  1.9,
-                                  Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: Colors.white),
-                                    child: FlatButton(
-                                      child: Text(
-                                        "Google",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-=======
-                                1.9,
+                                1.8,
                                 Container(
                                   height: 50,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(50),
-                                    color: Colors.black
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "Github",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold
->>>>>>> 50b7addbb1f432b3da8a151c489091a0a2b730e4
+                                    color: Colors.white),
+                                  child: FlatButton(
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Text("Google",
+                                        style: TextStyle(
+                                          color: Colors.redAccent[700],
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.center
                                       ),
-                                      onPressed: () {},
                                     ),
+                                  onPressed: () {},
                                   ),
                                 )
                               ),
                             )
+
+
+
+
+
                           ],
                         )
                       ],
