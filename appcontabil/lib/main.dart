@@ -1,4 +1,4 @@
-import 'package:appcontabil/pages/signup.page.dart';
+import 'package:appcontabil/ui/splash.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/login.page.dart';
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: LoginPage(),
+      home: SplashScreen(),
     );
   }
 }
