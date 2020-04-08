@@ -1,7 +1,13 @@
 import 'package:appcontabil/animation/FadeAnimation.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _showPassword = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,8 +77,9 @@ class LoginPage extends StatelessWidget {
                                       border: Border(
                                           bottom: BorderSide(
                                               color: Colors.grey[200]))),
-                                  child: TextField(
+                                  child: TextFormField(
                                     decoration: InputDecoration(
+                                        icon: Icon(Icons.email),
                                         hintText: "Email",
                                         hintStyle:
                                             TextStyle(color: Colors.grey),
@@ -82,12 +89,25 @@ class LoginPage extends StatelessWidget {
                                 Container(
                                   padding: EdgeInsets.all(10),
                                   decoration: BoxDecoration(),
-                                  child: TextField(
+                                  child: TextFormField(
                                     decoration: InputDecoration(
-                                        hintText: "Senha",
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        border: InputBorder.none),
+                                      icon: Icon(Icons.lock),
+                                      hintText: "Senha",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none,
+                                      suffixIcon: GestureDetector(
+                                        child: Icon(_showPassword == false
+                                            ? Icons.visibility_off
+                                            : Icons.visibility),
+                                        onTap: () {
+                                          setState(() {
+                                            _showPassword = !_showPassword;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    obscureText:
+                                        _showPassword == false ? true : false,
                                   ),
                                 ),
                               ],
