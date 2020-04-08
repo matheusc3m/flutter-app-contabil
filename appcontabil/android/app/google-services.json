@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "446801563374",
+    "firebase_url": "https://ea-assistant-67dec.firebaseio.com",
+    "project_id": "ea-assistant-67dec",
+    "storage_bucket": "ea-assistant-67dec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446801563374:android:772729cd0528aabb446dff",
+        "android_client_info": {
+          "package_name": "com.example.appcontabil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "446801563374-c35q3tann37762c770mapbk5na3f2ppg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDScGNR5ilqu-7IfMLd9bzYkGwhexm1z34"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446801563374-c35q3tann37762c770mapbk5na3f2ppg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
