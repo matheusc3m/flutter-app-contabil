@@ -22,14 +22,14 @@ class _LoginPageState extends State<LoginPage> {
 
   void doLogin(BuildContext context) async {
     try {
-      FirebaseUser user = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: username, password: password);
+      AuthResult user = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: username, password: password);
       if (user != null) {
         _pass.text = '';
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => SplashScreen()));
       }
-      print('logado em ${user.uid}');
+      print('logado em ${user.user}');
     } catch (e) {
       print("Error: ${e.toString()}");
       Scaffold.of(context).showSnackBar(SnackBar(
