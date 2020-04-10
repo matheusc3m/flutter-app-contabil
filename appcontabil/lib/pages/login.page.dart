@@ -1,4 +1,5 @@
 import 'package:appcontabil/animation/FadeAnimation.dart';
+import 'package:appcontabil/pages/signUp.page.dart';
 import 'package:appcontabil/ui/splash.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   void doLogin(BuildContext context) async {
     try {
       AuthResult user = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: username, password: password);
+          .signInWithEmailAndPassword(email: username, password: password);
       if (user != null) {
         _pass.text = '';
         Navigator.push(
@@ -31,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
       }
       print('logado em ${user.user}');
     } catch (e) {
-      print("Error: ${e.toString()}");
+      //print("Error: ${e.toString()}");
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text("Falha ao realizar o login"),
         backgroundColor: Colors.redAccent,
@@ -199,17 +200,22 @@ class _LoginPageState extends State<LoginPage> {
                                     borderRadius: BorderRadius.circular(50),
                                     color: Colors.purple[900]),
                                 child: FlatButton(
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    child: Text("Criar Conta",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        textAlign: TextAlign.center),
-                                  ),
-                                  onPressed: () {},
-                                ),
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Text("Criar Conta",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          textAlign: TextAlign.center),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SignUpPage()));
+                                    }),
                               )),
                           SizedBox(
                             height: 30,
