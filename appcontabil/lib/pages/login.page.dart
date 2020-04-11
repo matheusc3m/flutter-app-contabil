@@ -3,6 +3,8 @@ import 'package:appcontabil/pages/signUp.page.dart';
 import 'package:appcontabil/ui/splash.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,6 +15,29 @@ class _LoginPageState extends State<LoginPage> {
   bool _showPassword = false;
   @override
 
+  /// Acesso com conta Google
+  
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  void _getUser() async {
+    try {
+      final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication = 
+        await googleSignInAccount.authentication;
+      
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+        idToken: googleSignInAuthentication.idToken, 
+        accessToken: googleSignInAuthentication.accessToken);
+
+      final AuthResult authResult = 
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+      final FirebaseUser user = authResult.user;
+    } catch (error) {
+
+    }
+  }
+
   /// Variáveis de formulário
 
   static final TextEditingController _pass = new TextEditingController();
@@ -20,6 +45,8 @@ class _LoginPageState extends State<LoginPage> {
       new TextEditingController();
   String get username => _emailUsuario.text;
   String get password => _pass.text;
+
+  // Função de login Email/senha
 
   void doLogin(BuildContext context) async {
     try {
@@ -276,7 +303,9 @@ class _LoginPageState extends State<LoginPage> {
                                               ),
                                               textAlign: TextAlign.center),
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          _getUser();
+                                        },
                                       ),
                                     )),
                               )
