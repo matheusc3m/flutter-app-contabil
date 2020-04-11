@@ -8,6 +8,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  bool _showPassword = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,16 +58,41 @@ class _SignUpPageState extends State<SignUpPage> {
                           top: 16,
                         ),
                         child: TextField(
+                          obscureText: _showPassword == false ? true : false,
                           decoration: InputDecoration(
-                              hintText: 'Senha', prefixIcon: Icon(Icons.lock)),
+                            hintText: 'Senha',
+                            suffixIcon: GestureDetector(
+                              child: Icon(_showPassword == false
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
+                              onTap: () {
+                                setState(() {
+                                  _showPassword = !_showPassword;
+                                });
+                              },
+                            ),
+                            prefixIcon: Icon(Icons.lock),
+                          ),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 16, bottom: 62),
                         child: TextField(
+                          obscureText: _showPassword == false ? true : false,
                           decoration: InputDecoration(
-                              hintText: 'Confirme sua senha',
-                              prefixIcon: Icon(Icons.lock)),
+                            hintText: 'Confirme sua senha',
+                            prefixIcon: Icon(Icons.lock),
+                            suffixIcon: GestureDetector(
+                              child: Icon(_showPassword == false
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
+                              onTap: () {
+                                setState(() {
+                                  _showPassword = !_showPassword;
+                                });
+                              },
+                            ),
+                          ),
                         ),
                       ),
                       MaterialButton(

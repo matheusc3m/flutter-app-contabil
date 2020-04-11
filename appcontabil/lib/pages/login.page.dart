@@ -1,10 +1,10 @@
 import 'package:appcontabil/animation/FadeAnimation.dart';
+import 'package:appcontabil/pages/resetPass.page.dart';
 import 'package:appcontabil/pages/signUp.page.dart';
 import 'package:appcontabil/ui/splash.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 
 class LoginPage extends StatefulWidget {
   @override
@@ -16,26 +16,25 @@ class _LoginPageState extends State<LoginPage> {
   @override
 
   /// Acesso com conta Google
-  
+
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
   void _getUser() async {
     try {
-      final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-      final GoogleSignInAuthentication googleSignInAuthentication = 
-        await googleSignInAccount.authentication;
-      
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
-        idToken: googleSignInAuthentication.idToken, 
-        accessToken: googleSignInAuthentication.accessToken);
+      final GoogleSignInAccount googleSignInAccount =
+          await googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
 
-      final AuthResult authResult = 
-        await FirebaseAuth.instance.signInWithCredential(credential);
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken);
+
+      final AuthResult authResult =
+          await FirebaseAuth.instance.signInWithCredential(credential);
 
       final FirebaseUser user = authResult.user;
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 
   /// Variáveis de formulário
@@ -185,9 +184,17 @@ class _LoginPageState extends State<LoginPage> {
                               FlatButton(
                                 child: Text(
                                   "Esqueceu a senha?",
-                                  style: TextStyle(color: Colors.grey),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ResetPassword()));
+                                },
                               )),
                           SizedBox(
                             height: 0.40,
@@ -200,19 +207,21 @@ class _LoginPageState extends State<LoginPage> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(50),
                                     color: Colors.deepPurple[900]),
-                                child: MaterialButton(
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    child: Text("Login",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        textAlign: TextAlign.center),
+                                child: Builder(
+                                  builder: (context) => MaterialButton(
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Text("Login",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          textAlign: TextAlign.center),
+                                    ),
+                                    onPressed: () {
+                                      doLogin(context);
+                                    },
                                   ),
-                                  onPressed: () {
-                                    doLogin(context);
-                                  },
                                 ),
                               )),
                           SizedBox(
