@@ -51,17 +51,34 @@ class _SignUpPageState extends State<SignUpPage> {
                       1.2,
                       Column(
                         children: <Widget>[
-                          TextField(
+                          TextFormField(
+                            decoration: InputDecoration(
+                              hintText: 'Nome Completo',
+                              prefixIcon: Icon(Icons.list)
+                            ),
+                            validator: (text){
+                              if (text.isEmpty) return "Preencha seu nome!";
+                            },
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          TextFormField(
                             decoration: InputDecoration(
                               hintText: 'E-mail',
                               prefixIcon: Icon(Icons.email),
                             ),
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (text){
+                              if(text.isEmpty || !text.contains("@")) 
+                                return "E-mail inválido!";
+                            },
                           ),
                           Padding(
                             padding: EdgeInsets.only(
                               top: 16,
                             ),
-                            child: TextField(
+                            child: TextFormField(
                               obscureText:
                                   _showPassword == false ? true : false,
                               decoration: InputDecoration(

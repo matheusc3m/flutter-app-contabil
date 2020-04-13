@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:appcontabil/animation/FadeAnimation.dart';
 import 'package:appcontabil/pages/resetPass.page.dart';
 import 'package:appcontabil/pages/signUp.page.dart';
@@ -13,6 +15,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _showPassword = false;
+
+    /// Login Email e Senha
+  
+  final _formKey = GlobalKey<FormState>();
+
   @override
 
   /// Acesso com conta Google
@@ -67,6 +74,8 @@ class _LoginPageState extends State<LoginPage> {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 
+  /// BUILD PAGINA DE LOGIN
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -77,11 +86,13 @@ class _LoginPageState extends State<LoginPage> {
           Colors.deepPurple[800],
           Colors.deepPurple[400]
         ])),
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
               child: Form(
+                key: _formKey,
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
@@ -94,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         children: <Widget>[
                           SizedBox(
-                            height: 80,
+                            height: 35,
                           ),
                           Padding(
                             padding: EdgeInsets.all(20),
@@ -144,6 +155,11 @@ class _LoginPageState extends State<LoginPage> {
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           border: InputBorder.none),
+                                      keyboardType: TextInputType.emailAddress,
+                                      validator: (text){
+                                        if(text.isEmpty || !text.contains("@")) 
+                                          return "E-mail inválido!";
+                                      },
                                     ),
                                   ),
                                   Container(
@@ -168,8 +184,10 @@ class _LoginPageState extends State<LoginPage> {
                                           },
                                         ),
                                       ),
-                                      obscureText:
-                                          _showPassword == false ? true : false,
+                                      obscureText: _showPassword == false ? true : false,
+                                      validator: (text){
+                                        if(text.isEmpty || text.length < 6) return "Senha Invalida";
+                                      },
                                     ),
                                   ),
                                 ],
@@ -179,7 +197,9 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(
                             height: 0.40,
                           ),
-                          FadeAnimation(
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: FadeAnimation(
                               1.5,
                               FlatButton(
                                 child: Text(
@@ -195,7 +215,9 @@ class _LoginPageState extends State<LoginPage> {
                                           builder: (context) =>
                                               ResetPassword()));
                                 },
+                                padding: EdgeInsets.zero,
                               )),
+                          ),
                           SizedBox(
                             height: 0.40,
                           ),
@@ -219,51 +241,25 @@ class _LoginPageState extends State<LoginPage> {
                                           textAlign: TextAlign.center),
                                     ),
                                     onPressed: () {
-                                      doLogin(context);
+                                      if (_formKey.currentState.validate())
+                                        doLogin(context);
                                     },
                                   ),
                                 ),
                               )),
+
+                          
                           SizedBox(
-                            height: 10,
-                          ),
-                          FadeAnimation(
-                              1.6,
-                              Container(
-                                height: 50,
-                                margin: EdgeInsets.symmetric(horizontal: 50),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: Colors.purple[900]),
-                                child: FlatButton(
-                                    child: SizedBox(
-                                      width: double.infinity,
-                                      child: Text("Criar Conta",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          textAlign: TextAlign.center),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SignUpPage()));
-                                    }),
-                              )),
-                          SizedBox(
-                            height: 30,
+                            height: 15,
                           ),
                           FadeAnimation(
                               1.7,
                               Text(
-                                "Login pelas redes sociais",
+                                "Entre com as redes sociais",
                                 style: TextStyle(color: Colors.grey),
                               )),
                           SizedBox(
-                            height: 30,
+                            height: 20,
                           ),
                           Row(
                             children: <Widget>[
@@ -319,7 +315,29 @@ class _LoginPageState extends State<LoginPage> {
                                     )),
                               )
                             ],
+                          ),
+                          
+                          SizedBox(
+                            height: 40,
+                          ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("Não Possui uma conta?"),
+                              FlatButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(context,
+                                    MaterialPageRoute(
+                                    builder: (context) => SignUpPage()
+                                  ));
+                                }, 
+                                child: Text("Crie Agora"),
+                                padding: EdgeInsets.zero,
+                              ),
+                            ],
                           )
+
                         ],
                       ),
                     ),
