@@ -1,12 +1,12 @@
-import 'dart:ffi';
-
 import 'package:appcontabil/animation/FadeAnimation.dart';
+import 'package:appcontabil/models/user_model.dart';
 import 'package:appcontabil/pages/resetPass.page.dart';
 import 'package:appcontabil/pages/signUp.page.dart';
+import 'package:appcontabil/ui/home_screen.dart';
 import 'package:appcontabil/ui/splash.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,40 +15,13 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _showPassword = false;
-
-    /// Login Email e Senha
   
   final _formKey = GlobalKey<FormState>();
-
-  @override
-
-  /// Acesso com conta Google
-
-  final GoogleSignIn googleSignIn = GoogleSignIn();
-
-  void _getUser() async {
-    try {
-      final GoogleSignInAccount googleSignInAccount =
-          await googleSignIn.signIn();
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
-
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
-          idToken: googleSignInAuthentication.idToken,
-          accessToken: googleSignInAuthentication.accessToken);
-
-      final AuthResult authResult =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-
-      final FirebaseUser user = authResult.user;
-    } catch (error) {}
-  }
 
   /// Variáveis de formulário
 
   static final TextEditingController _pass = new TextEditingController();
-  static final TextEditingController _emailUsuario =
-      new TextEditingController();
+  static final TextEditingController _emailUsuario = new TextEditingController();
   String get username => _emailUsuario.text;
   String get password => _pass.text;
 
@@ -61,11 +34,11 @@ class _LoginPageState extends State<LoginPage> {
       if (user != null) {
         _pass.text = '';
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SplashScreen()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }
       print('logado em ${user.user}');
     } catch (e) {
-      //print("Error: ${e.toString()}");
+      print("Error: ${e.toString()}");
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text("Falha ao realizar o login"),
         backgroundColor: Colors.redAccent,
@@ -75,10 +48,16 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   /// BUILD PAGINA DE LOGIN
-
+  
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: ScopedModelDescendant<UserModel>(
+        builder: (context, child, model){
+          if(model.isLoading)
+            return Center(child: CircularProgressIndicator());
+
+        return Container(
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topCenter, colors: [
@@ -243,6 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                                     onPressed: () {
                                       if (_formKey.currentState.validate())
                                         doLogin(context);
+                                      // TESTE model.signIn();
                                     },
                                   ),
                                 ),
@@ -309,7 +289,7 @@ class _LoginPageState extends State<LoginPage> {
                                               textAlign: TextAlign.center),
                                         ),
                                         onPressed: () {
-                                          _getUser();
+                                          model.getUser();
                                         },
                                       ),
                                     )),
@@ -347,7 +327,8 @@ class _LoginPageState extends State<LoginPage> {
             )
           ],
         ),
-      ),
-    );
-  }
+      );
+      }
+    )
+  );}
 }
