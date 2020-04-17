@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
           gridDelegate: (SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: MediaQuery.of(context).size.width /
-                (MediaQuery.of(context).size.height / 2.6),
+                (MediaQuery.of(context).size.height / 2.3),
           )),
           itemBuilder: (BuildContext context, int index) {
             return FadeAnimation(

@@ -3,7 +3,6 @@ import 'package:appcontabil/models/user_model.dart';
 import 'package:appcontabil/pages/mainPage.dart';
 import 'package:appcontabil/pages/resetPass.page.dart';
 import 'package:appcontabil/pages/signUp.page.dart';
-import 'package:appcontabil/ui/splash.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -30,14 +29,14 @@ class _LoginPageState extends State<LoginPage> {
 
   void doLogin(BuildContext context) async {
     try {
-      AuthResult user = await FirebaseAuth.instance
+      FirebaseUser user = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: username, password: password);
       if (user != null) {
         _pass.text = '';
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => MainPage()));
       }
-      print('logado em ${user.user}');
+      print('logado em ${user.uid}');
     } catch (e) {
       print("Error: ${e.toString()}");
       Scaffold.of(context).showSnackBar(SnackBar(

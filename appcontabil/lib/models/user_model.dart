@@ -13,34 +13,31 @@ class UserModel extends Model {
 
   bool isLoading = false;
 
-  // Criando conta
-
   void signUp(
-      {@required Map<String, dynamic> userData,
-      @required String pass,
-      @required VoidCallback onSucess,
+      {@required Map<String, dynamic> userData, @required String pass, @required VoidCallback onSucess,
       @required VoidCallback onFail}) {
     isLoading = true;
     notifyListeners();
 
-    _auth
-        .createUserWithEmailAndPassword(
-            email: userData["email"], password: pass)
-        .then((user) async {
-      firebaseUser = user as FirebaseUser;
+    _auth.createUserWithEmailAndPassword(
+      email: userData["email"], password: pass)
+    .then((user) async {
+
+      firebaseUser = user; 
 
       await _saveUserData(userData);
 
       onSucess();
       isLoading = false;
       notifyListeners();
-    }).catchError((e) {
+    })
+    .catchError((e) {
       onFail();
       isLoading = false;
       notifyListeners();
     });
   }
-
+  
   void recoverPass() {}
 
   // Salvar dados de Cadastro no banco NAO FUNCIONA AINDA
@@ -48,10 +45,7 @@ class UserModel extends Model {
   Future<Null> _saveUserData(Map<String, dynamic> userData) async {
     this.userData = userData;
 
-    await Firestore.instance
-        .collection("users")
-        .document(firebaseUser.uid)
-        .setData(userData);
+    await Firestore.instance.collection("users").document(firebaseUser.uid).setData(userData);
   }
 
   //Login com conta Google
@@ -69,8 +63,9 @@ class UserModel extends Model {
           idToken: googleSignInAuthentication.idToken,
           accessToken: googleSignInAuthentication.accessToken);
 
-      final AuthResult authResult =
+      final FirebaseUser firebaseAuth =
           await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (error) {}
   }
+
 }

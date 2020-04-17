@@ -18,7 +18,7 @@ environment:
 
 dependencies:
   curved_navigation_bar: ^0.1.2
-  firebase_auth: ^0.15.1+1
+  firebase_auth: ^0.11.1+12
   firebase_core: ^0.4.4+3
   google_sign_in: ^4.1.1
   scoped_model: ^0.3.0
