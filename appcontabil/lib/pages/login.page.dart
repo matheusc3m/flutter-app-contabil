@@ -1,5 +1,6 @@
 import 'package:appcontabil/animation/FadeAnimation.dart';
 import 'package:appcontabil/models/user_model.dart';
+import 'package:appcontabil/pages/mainPage.dart';
 import 'package:appcontabil/pages/resetPass.page.dart';
 import 'package:appcontabil/pages/signUp.page.dart';
 import 'package:appcontabil/ui/splash.dart';
@@ -14,13 +15,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _showPassword = false;
-  
+
   final _formKey = GlobalKey<FormState>();
 
   /// Variáveis de formulário
 
   static final TextEditingController _pass = new TextEditingController();
-  static final TextEditingController _emailUsuario = new TextEditingController();
+  static final TextEditingController _emailUsuario =
+      new TextEditingController();
   String get username => _emailUsuario.text;
   String get password => _pass.text;
 
@@ -33,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
       if (user != null) {
         _pass.text = '';
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SplashScreen()));
+            context, MaterialPageRoute(builder: (context) => MainPage()));
       }
       print('logado em ${user.user}');
     } catch (e) {
@@ -47,16 +49,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   /// BUILD PAGINA DE LOGIN
-  
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ScopedModelDescendant<UserModel>(
-        builder: (context, child, model){
-          if(model.isLoading)
-            return Center(child: CircularProgressIndicator());
+    return Scaffold(body:
+        ScopedModelDescendant<UserModel>(builder: (context, child, model) {
+      if (model.isLoading) return Center(child: CircularProgressIndicator());
 
-        return Container(
+      return Container(
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topCenter, colors: [
@@ -64,7 +64,6 @@ class _LoginPageState extends State<LoginPage> {
           Colors.deepPurple[800],
           Colors.deepPurple[400]
         ])),
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -134,8 +133,8 @@ class _LoginPageState extends State<LoginPage> {
                                               TextStyle(color: Colors.grey),
                                           border: InputBorder.none),
                                       keyboardType: TextInputType.emailAddress,
-                                      validator: (text){
-                                        if(text.isEmpty || !text.contains("@")) 
+                                      validator: (text) {
+                                        if (text.isEmpty || !text.contains("@"))
                                           return "E-mail inválido!";
                                       },
                                     ),
@@ -162,9 +161,11 @@ class _LoginPageState extends State<LoginPage> {
                                           },
                                         ),
                                       ),
-                                      obscureText: _showPassword == false ? true : false,
-                                      validator: (text){
-                                        if(text.isEmpty || text.length < 6) return "Senha Invalida";
+                                      obscureText:
+                                          _showPassword == false ? true : false,
+                                      validator: (text) {
+                                        if (text.isEmpty || text.length < 6)
+                                          return "Senha Invalida";
                                       },
                                     ),
                                   ),
@@ -178,23 +179,23 @@ class _LoginPageState extends State<LoginPage> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: FadeAnimation(
-                              1.5,
-                              FlatButton(
-                                child: Text(
-                                  "Esqueceu a senha?",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ResetPassword()));
-                                },
-                                padding: EdgeInsets.zero,
-                              )),
+                                1.5,
+                                FlatButton(
+                                  child: Text(
+                                    "Esqueceu a senha?",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ResetPassword()));
+                                  },
+                                  padding: EdgeInsets.zero,
+                                )),
                           ),
                           SizedBox(
                             height: 0.40,
@@ -226,8 +227,6 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                               )),
-
-                          
                           SizedBox(
                             height: 15,
                           ),
@@ -295,28 +294,34 @@ class _LoginPageState extends State<LoginPage> {
                               )
                             ],
                           ),
-                          
                           SizedBox(
                             height: 40,
                           ),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text("Não Possui uma conta?"),
-                              FlatButton(
-                                onPressed: () {
-                                  Navigator.pushReplacement(context,
-                                    MaterialPageRoute(
-                                    builder: (context) => SignUpPage()
-                                  ));
-                                }, 
-                                child: Text("Crie Agora"),
-                                padding: EdgeInsets.zero,
-                              ),
-                            ],
+                          FadeAnimation(
+                            1.9,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  "Não Possui uma conta?",
+                                  style: TextStyle(
+                                      color: Colors.blue[200],
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                FlatButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SignUpPage()));
+                                  },
+                                  child: Text("Crie Agora"),
+                                  padding: EdgeInsets.zero,
+                                ),
+                              ],
+                            ),
                           )
-
                         ],
                       ),
                     ),
@@ -327,7 +332,6 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       );
-      }
-    )
-  );}
+    }));
+  }
 }

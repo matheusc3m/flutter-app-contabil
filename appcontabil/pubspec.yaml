@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  curved_navigation_bar: ^0.1.2
   firebase_auth: ^0.15.1+1
   firebase_core: ^0.4.4+3
   google_sign_in: ^4.1.1
@@ -52,6 +53,7 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
    - lib/images/
+   - lib/images/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

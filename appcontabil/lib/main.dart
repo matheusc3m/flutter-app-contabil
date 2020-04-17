@@ -1,4 +1,7 @@
 import 'package:appcontabil/models/user_model.dart';
+import 'package:appcontabil/pages/HomePage.dart';
+
+import 'package:appcontabil/pages/mainPage.dart';
 import 'package:appcontabil/ui/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';

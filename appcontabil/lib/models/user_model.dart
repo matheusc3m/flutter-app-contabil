@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class UserModel extends Model{ 
-
+class UserModel extends Model {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   FirebaseUser firebaseUser;
@@ -16,15 +15,18 @@ class UserModel extends Model{
 
   // Criando conta
 
-  void signUp({@required Map<String, dynamic> userData,@required String pass,
-    @required VoidCallback onSucess,@required VoidCallback onFail}) {
+  void signUp(
+      {@required Map<String, dynamic> userData,
+      @required String pass,
+      @required VoidCallback onSucess,
+      @required VoidCallback onFail}) {
     isLoading = true;
     notifyListeners();
 
-    _auth.createUserWithEmailAndPassword(
-      email: userData["email"], 
-      password: pass
-    ).then((user) async {
+    _auth
+        .createUserWithEmailAndPassword(
+            email: userData["email"], password: pass)
+        .then((user) async {
       firebaseUser = user as FirebaseUser;
 
       await _saveUserData(userData);
@@ -32,26 +34,25 @@ class UserModel extends Model{
       onSucess();
       isLoading = false;
       notifyListeners();
-      })
-      .catchError((e){
-        onFail();
-        isLoading = false;
-        notifyListeners();
-      });
+    }).catchError((e) {
+      onFail();
+      isLoading = false;
+      notifyListeners();
+    });
   }
 
-  void recoverPass(){
-
-  }
+  void recoverPass() {}
 
   // Salvar dados de Cadastro no banco NAO FUNCIONA AINDA
 
   Future<Null> _saveUserData(Map<String, dynamic> userData) async {
     this.userData = userData;
-    
-    await Firestore.instance.collection("users").document(firebaseUser.uid).setData(userData);
-    
-  } 
+
+    await Firestore.instance
+        .collection("users")
+        .document(firebaseUser.uid)
+        .setData(userData);
+  }
 
   //Login com conta Google
 
@@ -70,10 +71,6 @@ class UserModel extends Model{
 
       final AuthResult authResult =
           await FirebaseAuth.instance.signInWithCredential(credential);
-
-      final FirebaseUser user = authResult.user;
-
-      
     } catch (error) {}
   }
 }
