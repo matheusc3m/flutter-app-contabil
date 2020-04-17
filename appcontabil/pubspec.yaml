@@ -19,11 +19,6 @@ environment:
 dependencies:
   firebase_auth: ^0.15.1+1
   firebase_core: ^0.4.4+3
-  firebase_analytics:
-  firebase_messaging:
-  path_provider:
-  url_launcher:
-  carousel_pro:
   google_sign_in: ^4.1.1
   scoped_model: ^0.3.0
   cloud_firestore: ^0.12.9

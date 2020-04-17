@@ -18,7 +18,6 @@ class UserModel extends Model{
 
   void signUp({@required Map<String, dynamic> userData,@required String pass,
     @required VoidCallback onSucess,@required VoidCallback onFail}) {
-
     isLoading = true;
     notifyListeners();
 
@@ -28,16 +27,11 @@ class UserModel extends Model{
     ).then((user) async {
       firebaseUser = user as FirebaseUser;
 
-      Firestore.instance.collection("usuarios").document("cadastros").setData({
-        'dados' : userData["email"],
-        'nome' : userData["nome"],
-      });
-      
+      await _saveUserData(userData);
 
       onSucess();
       isLoading = false;
       notifyListeners();
-
       })
       .catchError((e){
         onFail();
@@ -46,17 +40,18 @@ class UserModel extends Model{
       });
   }
 
-
   void recoverPass(){
 
   }
 
   // Salvar dados de Cadastro no banco NAO FUNCIONA AINDA
 
-  // Future<Null> _saveUserData(Map<String, dynamic> userData) async {
-  //   this.userData = userData;
-  //   await _saveUserData(userData);
-  // } 
+  Future<Null> _saveUserData(Map<String, dynamic> userData) async {
+    this.userData = userData;
+    
+    await Firestore.instance.collection("users").document(firebaseUser.uid).setData(userData);
+    
+  } 
 
   //Login com conta Google
 
