@@ -1,4 +1,5 @@
 import 'package:appcontabil/animation/FadeAnimation.dart';
+import 'package:appcontabil/pages/cadastroFornecedor.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -30,10 +31,17 @@ class HomePage extends StatelessWidget {
               1.2,
               Card(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    if (index == 1)
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CadastroFornecedor()));
+                  },
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 20),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01),
                       Image.asset(images[index], height: 50, width: 50),
                       Padding(
                         padding: EdgeInsets.all(20),

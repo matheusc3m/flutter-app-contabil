@@ -1,60 +1,92 @@
-import 'package:appcontabil/animation/FadeAnimation.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
+class CadastroFornecedor extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _CadastroFornecedorState createState() => _CadastroFornecedorState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _CadastroFornecedorState extends State<CadastroFornecedor> {
   @override
   Widget build(BuildContext context) {
-    var services = [
-      "Cadastro de Mei",
-      "Fornecedores",
-      "Dashboard",
-      "Fazer Lançamento"
-    ];
-    var images = [
-      "lib/images/icons/mei.png",
-      "lib/images/icons/fornecedor.png",
-      "lib/images/icons/dashboard.png",
-      "lib/images/icons/lancamento.png"
-    ];
-    return Padding(
-      padding: EdgeInsets.all(8),
-      child: GridView.builder(
-          itemCount: services.length,
-          gridDelegate: (SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: MediaQuery.of(context).size.width /
-                (MediaQuery.of(context).size.height / 2.6),
-          )),
-          itemBuilder: (BuildContext context, int index) {
-            return FadeAnimation(
-              1.2,
-              Card(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 20),
-                    Image.asset(images[index], height: 50, width: 50),
-                    Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Text(
-                        services[index],
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.deepPurple,
-                            fontWeight: FontWeight.bold,
-                            height: 1.2),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Cadastro de Fornecedor"),
+        centerTitle: true,
+      ),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Colors.deepPurple[900],
+            Colors.deepPurple[600],
+            Colors.deepPurple[400],
+          ]),
+        ),
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.01),
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding:
+                    EdgeInsets.all(MediaQuery.of(context).size.height * 0.06),
+                child: Container(
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.deepPurple[900],
+                          blurRadius: 10, // soften the shadow
+                          spreadRadius: 8.0, //extend the shadow
+                          offset: Offset(
+                            10.0, // Move to right 10  horizontally
+                            9, // Move to bottom 10 Vertically
+                          ),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.white),
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 50),
+                    child: Column(children: <Widget>[
+                      getFormField("Razão Social", Icons.business),
+                      getFormField("Cnpj", Icons.business_center),
+                      getFormField("Endereço", Icons.account_balance),
+                      Padding(
+                        padding: EdgeInsets.only(top: 40),
+                        child: MaterialButton(
+                          color: Colors.deepPurple,
+                          child: Text(
+                            "Salvar Fornecedores",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: () {},
+                        ),
+                      )
+                    ]),
+                  ),
                 ),
               ),
-            );
-          }),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  getFormField(String hintText, IconData icone) {
+    return Padding(
+      padding: EdgeInsets.only(left: 5, top: 5, bottom: 5, right: 5),
+      child: TextFormField(
+        decoration: InputDecoration(
+            prefixIcon: Icon(icone),
+            hintText: "$hintText",
+            hintStyle: TextStyle(
+                color: Colors.deepPurple, fontWeight: FontWeight.bold)),
+      ),
     );
   }
 }

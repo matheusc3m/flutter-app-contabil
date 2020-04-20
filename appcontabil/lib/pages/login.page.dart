@@ -304,8 +304,9 @@ class _LoginPageState extends State<LoginPage> {
                                 Text(
                                   "Não Possui uma conta?",
                                   style: TextStyle(
-                                      color: Colors.blue[200],
-                                      fontWeight: FontWeight.w600),
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal),
                                 ),
                                 FlatButton(
                                   onPressed: () {
@@ -315,7 +316,13 @@ class _LoginPageState extends State<LoginPage> {
                                             builder: (context) =>
                                                 SignUpPage()));
                                   },
-                                  child: Text("Crie Agora"),
+                                  child: Text(
+                                    "Crie Agora",
+                                    style: TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w900),
+                                  ),
                                   padding: EdgeInsets.zero,
                                 ),
                               ],
