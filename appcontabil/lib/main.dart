@@ -9,7 +9,7 @@ void main() async {
   var db = Firestore.instance;
   DocumentSnapshot resultado =
       await db.collection("fornecedor").document("user1").get();
-  print("ola mundo");
+  print(resultado.documentID);
 }
 
 class MyApp extends StatelessWidget {
