@@ -1,3 +1,4 @@
+import 'package:appcontabil/models/fornecedor_model.dart';
 import 'package:flutter/material.dart';
 
 class CadastroFornecedor extends StatefulWidget {
@@ -6,6 +7,11 @@ class CadastroFornecedor extends StatefulWidget {
 }
 
 class _CadastroFornecedorState extends State<CadastroFornecedor> {
+  Fornecedor f = Fornecedor();
+  final _razaoController = TextEditingController();
+  final _cnpjController = TextEditingController();
+  final _enderecoController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,9 +56,12 @@ class _CadastroFornecedorState extends State<CadastroFornecedor> {
                   child: Padding(
                     padding: EdgeInsets.only(top: 50),
                     child: Column(children: <Widget>[
-                      getFormField("Razão Social", Icons.business),
-                      getFormField("Cnpj", Icons.business_center),
-                      getFormField("Endereço", Icons.account_balance),
+                      getFormField(
+                          "Razão Social", Icons.business, _razaoController),
+                      getFormField(
+                          "Cnpj", Icons.business_center, _cnpjController),
+                      getFormField("Endereço", Icons.account_balance,
+                          _enderecoController),
                       Padding(
                         padding: EdgeInsets.only(top: 40),
                         child: MaterialButton(
@@ -63,7 +72,11 @@ class _CadastroFornecedorState extends State<CadastroFornecedor> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            f.addFornecedor(_razaoController.text,
+                                _cnpjController.text, _enderecoController.text);
+                            print("cadastro enviado ao banco");
+                          },
                         ),
                       )
                     ]),
@@ -77,10 +90,12 @@ class _CadastroFornecedorState extends State<CadastroFornecedor> {
     );
   }
 
-  getFormField(String hintText, IconData icone) {
+  getFormField(
+      String hintText, IconData icone, TextEditingController controlador) {
     return Padding(
       padding: EdgeInsets.only(left: 5, top: 5, bottom: 5, right: 5),
       child: TextFormField(
+        controller: controlador,
         decoration: InputDecoration(
             prefixIcon: Icon(icone),
             hintText: "$hintText",
