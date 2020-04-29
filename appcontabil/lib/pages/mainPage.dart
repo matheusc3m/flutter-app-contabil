@@ -1,5 +1,6 @@
 import 'package:appcontabil/animation/FadeAnimation.dart';
 import 'package:appcontabil/pages/HomePage.dart';
+import 'package:appcontabil/pages/cadastroFornecedor.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {

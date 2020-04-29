@@ -1,6 +1,7 @@
 import 'package:appcontabil/animation/FadeAnimation.dart';
 import 'package:appcontabil/pages/cadastroFornecedor.dart';
 import 'package:appcontabil/pages/listagemFornecedor.dart';
+import 'package:appcontabil/pages/listagemLancamento.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -10,7 +11,7 @@ class HomePage extends StatelessWidget {
       "Cadastro de Mei",
       "Fornecedores",
       "Dashboard",
-      "Fazer Lançamento"
+      "Lançamentos"
     ];
     var images = [
       "lib/images/icons/mei.png",
@@ -38,6 +39,11 @@ class HomePage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => ListaFornecedor()));
+                    else if (index == 3)
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ListaLancamento()));
                   },
                   child: Column(
                     children: <Widget>[
@@ -49,7 +55,8 @@ class HomePage extends StatelessWidget {
                         child: Text(
                           services[index],
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.02,
                               color: Colors.deepPurple,
                               fontWeight: FontWeight.bold,
                               height: 1.2),
