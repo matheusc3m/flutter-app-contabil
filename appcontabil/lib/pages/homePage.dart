@@ -1,5 +1,6 @@
 import 'package:appcontabil/animation/FadeAnimation.dart';
 import 'package:appcontabil/pages/cadastroFornecedor.dart';
+import 'package:appcontabil/pages/listagemFornecedor.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -36,7 +37,7 @@ class HomePage extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CadastroFornecedor()));
+                              builder: (context) => ListaFornecedor()));
                   },
                   child: Column(
                     children: <Widget>[
