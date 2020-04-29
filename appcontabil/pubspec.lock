@@ -85,6 +85,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.26"
+  date_field:
+    dependency: "direct main"
+    description:
+      name: date_field
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2"
   firebase:
     dependency: transitive
     description:
@@ -125,6 +132,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_radio_button_group:
+    dependency: "direct main"
+    description:
+      name: flutter_radio_button_group
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2+3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -177,6 +191,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.16.1"
   js:
     dependency: transitive
     description:
