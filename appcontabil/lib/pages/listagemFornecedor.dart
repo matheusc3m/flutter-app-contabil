@@ -32,17 +32,12 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
     "CONCEPT MÓVEIS E DECORAÇÕES LTDA",
     "COACH GESTAO DE PESSOAS LTDA"
   ];
-  bool isSearching = false;
+  bool isSearching = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.deepPurple,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          tooltip: 'Navigation menu',
-          onPressed: null,
-        ),
         title: isSearching
             ? Text("Fornecedores (0)")
             : TextField(
