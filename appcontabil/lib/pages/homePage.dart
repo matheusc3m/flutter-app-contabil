@@ -1,5 +1,6 @@
 import 'package:appcontabil/animation/FadeAnimation.dart';
 import 'package:appcontabil/pages/cadastroFornecedor.dart';
+import 'package:appcontabil/pages/cadastroMei.dart';
 import 'package:appcontabil/pages/listagemFornecedor.dart';
 import 'package:appcontabil/pages/listagemLancamento.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,11 @@ class HomePage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => ListaLancamento()));
+                    else if (index == 0)
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CadastroMei()));
                   },
                   child: Column(
                     children: <Widget>[
