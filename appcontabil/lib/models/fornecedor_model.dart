@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
 class Fornecedor {
   String userId;
@@ -9,15 +10,13 @@ class Fornecedor {
 
   Fornecedor({this.userId, this.razaoSocial, this.cnpj, this.endereco});
 
-  Fornecedor.fromMap(Map<String, dynamic> map, {this.reference}) {
+  Fornecedor.fromMap(Map<String, dynamic> map, String id) {
     userId = map["userId"];
 
     cnpj = map["cnpj"];
     endereco = map["endereco"];
     razaoSocial = map["razao social"];
   }
-  Fornecedor.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data, reference: snapshot.reference);
 
   toJson() {
     return {
@@ -26,6 +25,16 @@ class Fornecedor {
       "endereco": endereco,
       "razao social": razaoSocial
     };
+  }
+
+  Stream<QuerySnapshot> getListaFornecedores() {
+    return Firestore.instance.collection("fornecedor").snapshots();
+  }
+
+  void deletaFornecedor(
+      BuildContext context, DocumentSnapshot doc, int position) async {
+    var db = Firestore.instance;
+    db.collection("fornecedor").document(doc.documentID).delete();
   }
 
   addFornecedor(String razaosocial, String cnpj, String endereco) {

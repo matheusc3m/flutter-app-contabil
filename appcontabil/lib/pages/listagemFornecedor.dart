@@ -1,4 +1,8 @@
+import 'dart:async';
+
+import 'package:appcontabil/models/fornecedor_model.dart';
 import 'package:appcontabil/pages/cadastroFornecedor.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +12,36 @@ class ListaFornecedor extends StatefulWidget {
 }
 
 class _ListaFornecedorState extends State<ListaFornecedor> {
+  Fornecedor f = Fornecedor();
+  List<Fornecedor> items;
+  var db = Firestore.instance;
+  StreamSubscription<QuerySnapshot> fornecedorInscricao;
+  @override
+  void initState() {
+    super.initState();
+    items = List();
+    fornecedorInscricao?.cancel();
+
+    fornecedorInscricao =
+        db.collection("fornecedor").snapshots().listen((snapshot) {
+      final List<Fornecedor> fornecedores = snapshot.documents
+          .map(
+            (documentSnapshot) => Fornecedor.fromMap(
+                documentSnapshot.data, documentSnapshot.documentID),
+          )
+          .toList();
+      setState(() {
+        this.items = fornecedores;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    fornecedorInscricao?.cancel();
+    super.dispose();
+  }
+
   var lista = [
     "ABBC - ASSOCIACAO BRASILEIRA DOS BANCOS",
     "ASSOCIACAO SOCIAL GOOD BRASIL ",
@@ -69,41 +103,59 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(color: Colors.white70),
-        child: ListView.builder(
-          padding: EdgeInsets.only(bottom: 80, left: 10, right: 10),
-          itemCount: lista.length,
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () {},
-              child: Card(
-                color: Colors.white,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    ListTile(
-                      leading: Icon(Icons.account_circle, size: 60),
-                      title: Text(lista[index]),
-                      subtitle: Text('CNPJ: 52.636.016/0001-99'),
-                      trailing: Wrap(
-                        spacing: 10, // space between two icons
-                        children: <Widget>[
-                          Icon(
-                            Icons.edit,
-                            color: Colors.green,
+        child: StreamBuilder<QuerySnapshot>(
+            /*meus dados*/ stream: f.getListaFornecedores(),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                default:
+                  List<DocumentSnapshot> documentos = snapshot.data.documents;
+                  return ListView.builder(
+                    padding: EdgeInsets.only(bottom: 80, left: 10, right: 10),
+                    itemCount: items.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {},
+                        child: Card(
+                          color: Colors.white,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              ListTile(
+                                leading: Icon(Icons.account_circle, size: 60),
+                                title: Text(items[index].razaoSocial),
+                                subtitle: Text(items[index].cnpj),
+                                trailing: Wrap(
+                                  spacing: 2, // space between two icons
+                                  children: <Widget>[
+                                    IconButton(
+                                      color: Colors.green,
+                                      onPressed: () {},
+                                      icon: const Icon(Icons.edit),
+                                    ),
+                                    IconButton(
+                                      color: Colors.red,
+                                      onPressed: () {
+                                        f.deletaFornecedor(
+                                            context, documentos[index], index);
+                                      },
+                                      icon: const Icon(Icons.delete_outline),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                          Icon(
-                            Icons.delete_outline,
-                            color: Colors.red,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
+                        ),
+                      );
+                    },
+                  );
+              }
+            }),
       ),
     );
   }
