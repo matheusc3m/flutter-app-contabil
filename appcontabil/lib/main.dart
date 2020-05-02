@@ -4,6 +4,7 @@ import 'package:appcontabil/ui/splash.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   runApp(MyApp());
@@ -19,6 +20,13 @@ class MyApp extends StatelessWidget {
     return ScopedModel<UserModel>(
       model: UserModel(),
       child: MaterialApp(
+        localizationsDelegates: [
+          // ... app-specific localization delegate[s] here
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [const Locale('pt', 'BR')],
         title: 'App Contábil',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
