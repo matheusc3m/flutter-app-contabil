@@ -1,5 +1,6 @@
 import 'package:appcontabil/models/fornecedor_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_alert/flutter_alert.dart';
 
 class CadastroFornecedor extends StatefulWidget {
   @override
@@ -75,6 +76,15 @@ class _CadastroFornecedorState extends State<CadastroFornecedor> {
                           onPressed: () {
                             f.addFornecedor(_razaoController.text,
                                 _cnpjController.text, _enderecoController.text);
+                            showAlert(
+                              context: context,
+                              body: "Seu fornecedor foi salvo com sucesso",
+                            );
+                            setState(() {
+                              _cnpjController.text = "";
+                              _enderecoController.text = "";
+                              _razaoController.text = "";
+                            });
                             print("cadastro enviado ao banco");
                           },
                         ),

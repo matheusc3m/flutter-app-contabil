@@ -5,6 +5,7 @@ import 'package:appcontabil/pages/cadastroFornecedor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_alert/flutter_alert.dart';
 
 class ListaFornecedor extends StatefulWidget {
   @override
@@ -73,7 +74,7 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
       backgroundColor: Colors.deepPurple,
       appBar: AppBar(
         title: isSearching
-            ? Text("Fornecedores (0)")
+            ? Text("Fornecedores (${items.length})")
             : TextField(
                 style: TextStyle(color: Colors.white, fontSize: 18),
                 decoration: InputDecoration(
@@ -140,8 +141,23 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
                                     IconButton(
                                       color: Colors.red,
                                       onPressed: () {
-                                        f.deletaFornecedor(
-                                            context, documentos[index], index);
+                                        showAlert(
+                                          context: context,
+                                          title: "Apagar fornecedor",
+                                          body:
+                                              "Tem certeza que deseja apagar o fornecedor?",
+                                          actions: [
+                                            AlertAction(
+                                              text: "Apagar",
+                                              isDestructiveAction: true,
+                                              onPressed: () {
+                                                f.deletaFornecedor(context,
+                                                    documentos[index], index);
+                                              },
+                                            ),
+                                          ],
+                                          cancelable: true,
+                                        );
                                       },
                                       icon: const Icon(Icons.delete_outline),
                                     ),
