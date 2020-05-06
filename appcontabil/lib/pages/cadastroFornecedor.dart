@@ -12,6 +12,8 @@ class _CadastroFornecedorState extends State<CadastroFornecedor> {
   final _razaoController = TextEditingController();
   final _cnpjController = TextEditingController();
   final _enderecoController = TextEditingController();
+  final _telefoneController = TextEditingController();
+  final _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,7 @@ class _CadastroFornecedorState extends State<CadastroFornecedor> {
                       ],
                       borderRadius: BorderRadius.circular(25),
                       color: Colors.white),
-                  height: MediaQuery.of(context).size.height * 0.6,
+                  height: MediaQuery.of(context).size.height * 0.75,
                   child: Padding(
                     padding: EdgeInsets.only(top: 50),
                     child: Column(children: <Widget>[
@@ -63,6 +65,9 @@ class _CadastroFornecedorState extends State<CadastroFornecedor> {
                           "Cnpj", Icons.business_center, _cnpjController),
                       getFormField("Endereço", Icons.account_balance,
                           _enderecoController),
+                      getFormField(
+                          "Telefone", Icons.phone, _telefoneController),
+                      getFormField("E-mail", Icons.email, _emailController),
                       Padding(
                         padding: EdgeInsets.only(top: 40),
                         child: MaterialButton(
@@ -74,8 +79,12 @@ class _CadastroFornecedorState extends State<CadastroFornecedor> {
                                 fontWeight: FontWeight.bold),
                           ),
                           onPressed: () {
-                            f.addFornecedor(_razaoController.text,
-                                _cnpjController.text, _enderecoController.text);
+                            f.addFornecedor(
+                                _razaoController.text,
+                                _cnpjController.text,
+                                _enderecoController.text,
+                                _telefoneController.text,
+                                _emailController.text);
                             showAlert(
                               context: context,
                               body: "Seu fornecedor foi salvo com sucesso",

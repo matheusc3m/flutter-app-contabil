@@ -6,9 +6,17 @@ class Fornecedor {
   String cnpj;
   String endereco;
   String razaoSocial;
+  String telefone;
+  String email;
   DocumentReference reference;
 
-  Fornecedor({this.userId, this.razaoSocial, this.cnpj, this.endereco});
+  Fornecedor(
+      {this.userId,
+      this.razaoSocial,
+      this.cnpj,
+      this.endereco,
+      this.telefone,
+      this.email});
 
   Fornecedor.fromMap(Map<String, dynamic> map, String id) {
     userId = map["userId"];
@@ -16,6 +24,8 @@ class Fornecedor {
     cnpj = map["cnpj"];
     endereco = map["endereco"];
     razaoSocial = map["razao social"];
+    telefone = map["telefone"];
+    email = map["email"];
   }
 
   toJson() {
@@ -23,7 +33,9 @@ class Fornecedor {
       "userId": userId,
       "cnpj": cnpj,
       "endereco": endereco,
-      "razao social": razaoSocial
+      "razao social": razaoSocial,
+      "telefone": telefone,
+      "email": email,
     };
   }
 
@@ -37,9 +49,14 @@ class Fornecedor {
     db.collection("fornecedor").document(doc.documentID).delete();
   }
 
-  addFornecedor(String razaosocial, String cnpj, String endereco) {
-    Fornecedor f =
-        Fornecedor(razaoSocial: razaosocial, cnpj: cnpj, endereco: endereco);
+  addFornecedor(String razaosocial, String cnpj, String endereco,
+      String telefone, String email) {
+    Fornecedor f = Fornecedor(
+        razaoSocial: razaosocial,
+        cnpj: cnpj,
+        endereco: endereco,
+        telefone: telefone,
+        email: email);
     try {
       Firestore.instance.runTransaction((Transaction transaction) async {
         await Firestore.instance

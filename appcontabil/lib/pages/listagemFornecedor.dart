@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ListaFornecedor extends StatefulWidget {
   @override
@@ -120,7 +121,54 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
                     itemCount: items.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          var alertStyle = AlertStyle(
+                              animationType: AnimationType.grow,
+                              isCloseButton: false,
+                              isOverlayTapDismiss: false,
+                              descStyle: TextStyle(fontWeight: FontWeight.bold),
+                              animationDuration: Duration(milliseconds: 200),
+                              alertBorder: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                side: BorderSide(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              titleStyle: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                              ),
+                              constraints: BoxConstraints.expand());
+                          Alert(
+                            context: context,
+                            style: alertStyle,
+                            title: "Informações deste fornecedor",
+                            content: Column(
+                              children: <Widget>[
+                                getRowAlert("Razão social",
+                                    "${items[index].razaoSocial}"),
+                                getRowAlert("Cnpj", "${items[index].cnpj}"),
+                                getRowAlert(
+                                    "Endereço", "${items[index].endereco}"),
+                                getRowAlert(
+                                    "Telefone", "${items[index].telefone}"),
+                                getRowAlert("Email", "${items[index].email}")
+                              ],
+                            ),
+                            buttons: [
+                              DialogButton(
+                                child: Text(
+                                  "Voltar",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                                onPressed: () => Navigator.pop(context),
+                                color: Color.fromRGBO(0, 179, 134, 1.0),
+                                radius: BorderRadius.circular(0.0),
+                              ),
+                            ],
+                          ).show();
+                        },
                         child: Card(
                           color: Colors.white,
                           child: Column(
@@ -175,4 +223,23 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
       ),
     );
   }
+}
+
+getRowAlert(String primeiro, String segundo) {
+  return Row(
+    children: <Widget>[
+      Text(
+        "$primeiro: ",
+        style: TextStyle(fontSize: 16),
+        overflow: TextOverflow.fade,
+      ),
+      Flexible(
+        flex: 1,
+        child: Text(
+          "$segundo",
+          style: TextStyle(fontSize: 14, color: Colors.deepPurple),
+        ),
+      )
+    ],
+  );
 }
