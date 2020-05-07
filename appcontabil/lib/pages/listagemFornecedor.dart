@@ -96,8 +96,18 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CadastroFornecedor()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CadastroFornecedor(
+                        Fornecedor(
+                            cnpj: "",
+                            razaoSocial: "",
+                            endereco: "",
+                            email: "",
+                            telefone: "",
+                            id: null),
+                      )));
         },
         child: Icon(Icons.add),
       ),
@@ -183,7 +193,27 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
                                   children: <Widget>[
                                     IconButton(
                                       color: Colors.green,
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CadastroFornecedor(
+                                                      Fornecedor(
+                                                          cnpj:
+                                                              items[index].cnpj,
+                                                          razaoSocial:
+                                                              items[index]
+                                                                  .razaoSocial,
+                                                          endereco: items[index]
+                                                              .endereco,
+                                                          email: items[index]
+                                                              .email,
+                                                          telefone: items[index]
+                                                              .telefone,
+                                                          id: items[index].id),
+                                                    )));
+                                      },
                                       icon: const Icon(Icons.edit),
                                     ),
                                     IconButton(

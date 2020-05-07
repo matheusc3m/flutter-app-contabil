@@ -8,7 +8,7 @@ class Fornecedor {
   String razaoSocial;
   String telefone;
   String email;
-  DocumentReference reference;
+  String id;
 
   Fornecedor(
       {this.userId,
@@ -16,16 +16,38 @@ class Fornecedor {
       this.cnpj,
       this.endereco,
       this.telefone,
-      this.email});
+      this.email,
+      this.id});
 
   Fornecedor.fromMap(Map<String, dynamic> map, String id) {
     userId = map["userId"];
 
-    cnpj = map["cnpj"];
-    endereco = map["endereco"];
-    razaoSocial = map["razao social"];
-    telefone = map["telefone"];
-    email = map["email"];
+    this.cnpj = map["cnpj"];
+    this.endereco = map["endereco"];
+    this.razaoSocial = map["razao social"];
+    this.telefone = map["telefone"];
+    this.email = map["email"];
+    this.id = id ?? '';
+  }
+  Fornecedor.map(dynamic obj) {
+    this.cnpj = obj['cnpj'];
+    this.endereco = obj['endereco'];
+    this.razaoSocial = obj['razao social'];
+    this.telefone = obj['telefone'];
+    this.email = obj['email'];
+    this.id = obj['id'];
+  }
+  Map<String, dynamic> toMap() {
+    var map = new Map<String, dynamic>();
+    if (id != null) {
+      map['id'] = id;
+    }
+    map['cnpj'] = cnpj;
+    map['endereco'] = endereco;
+    map['razao social'] = razaoSocial;
+    map['telefone'] = telefone;
+    map['email'] = email;
+    return map;
   }
 
   toJson() {
@@ -50,22 +72,41 @@ class Fornecedor {
   }
 
   addFornecedor(String razaosocial, String cnpj, String endereco,
-      String telefone, String email) {
-    Fornecedor f = Fornecedor(
-        razaoSocial: razaosocial,
-        cnpj: cnpj,
-        endereco: endereco,
-        telefone: telefone,
-        email: email);
-    try {
-      Firestore.instance.runTransaction((Transaction transaction) async {
-        await Firestore.instance
-            .collection("fornecedor")
-            .document()
-            .setData(f.toJson());
-      });
-    } catch (e) {
-      print(e.toString());
+      String telefone, String email, String id) {
+    if (id != null) {
+      Fornecedor f = Fornecedor(
+          razaoSocial: razaosocial,
+          cnpj: cnpj,
+          endereco: endereco,
+          telefone: telefone,
+          email: email);
+      try {
+        Firestore.instance.runTransaction((Transaction transaction) async {
+          await Firestore.instance
+              .collection("fornecedor")
+              .document(id)
+              .setData(f.toJson());
+        });
+      } catch (e) {
+        print(e.toString());
+      }
+    } else {
+      Fornecedor f = Fornecedor(
+          razaoSocial: razaosocial,
+          cnpj: cnpj,
+          endereco: endereco,
+          telefone: telefone,
+          email: email);
+      try {
+        Firestore.instance.runTransaction((Transaction transaction) async {
+          await Firestore.instance
+              .collection("fornecedor")
+              .document()
+              .setData(f.toJson());
+        });
+      } catch (e) {
+        print(e.toString());
+      }
     }
   }
 }

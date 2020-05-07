@@ -3,17 +3,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 
 class CadastroFornecedor extends StatefulWidget {
+  final Fornecedor fornecedor;
+
+  CadastroFornecedor(this.fornecedor);
+
   @override
   _CadastroFornecedorState createState() => _CadastroFornecedorState();
 }
 
 class _CadastroFornecedorState extends State<CadastroFornecedor> {
   Fornecedor f = Fornecedor();
-  final _razaoController = TextEditingController();
-  final _cnpjController = TextEditingController();
-  final _enderecoController = TextEditingController();
-  final _telefoneController = TextEditingController();
-  final _emailController = TextEditingController();
+  TextEditingController _razaoController;
+  TextEditingController _cnpjController;
+  TextEditingController _enderecoController;
+  TextEditingController _telefoneController;
+  TextEditingController _emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    _razaoController =
+        new TextEditingController(text: widget.fornecedor.razaoSocial);
+
+    _cnpjController = TextEditingController(text: widget.fornecedor.cnpj);
+    _enderecoController =
+        TextEditingController(text: widget.fornecedor.endereco);
+    _telefoneController =
+        TextEditingController(text: widget.fornecedor.telefone);
+    _emailController = TextEditingController(text: widget.fornecedor.email);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,19 +90,27 @@ class _CadastroFornecedorState extends State<CadastroFornecedor> {
                         padding: EdgeInsets.only(top: 40),
                         child: MaterialButton(
                           color: Colors.deepPurple,
-                          child: Text(
-                            "Salvar Fornecedores",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
+                          child: widget.fornecedor.id != null
+                              ? Text(
+                                  "Atualizar",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              : Text(
+                                  "Salvar",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
                           onPressed: () {
                             f.addFornecedor(
                                 _razaoController.text,
                                 _cnpjController.text,
                                 _enderecoController.text,
                                 _telefoneController.text,
-                                _emailController.text);
+                                _emailController.text,
+                                widget.fornecedor.id);
                             showAlert(
                               context: context,
                               body: "Seu fornecedor foi salvo com sucesso",
