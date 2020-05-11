@@ -104,8 +104,7 @@ class _ListaLancamentoState extends State<ListaLancamento> {
             SizedBox(
               height: 10,
             ),
-            Container(
-              height: MediaQuery.of(context).size.height - 186,
+            Expanded(
               child: ListView.builder(
                 padding:
                     EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 80),
