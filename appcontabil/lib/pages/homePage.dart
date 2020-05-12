@@ -3,6 +3,7 @@ import 'package:appcontabil/pages/cadastroFornecedor.dart';
 import 'package:appcontabil/pages/cadastroMei.dart';
 import 'package:appcontabil/pages/listagemFornecedor.dart';
 import 'package:appcontabil/pages/listagemLancamento.dart';
+
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,13 +13,17 @@ class HomePage extends StatelessWidget {
       "Cadastro de Mei",
       "Fornecedores",
       "Dashboard",
-      "Lançamentos"
+      "Lançamentos",
+      "Editar Dados",
+      "OCR"
     ];
     var images = [
       "lib/images/icons/mei.png",
       "lib/images/icons/fornecedor.png",
       "lib/images/icons/dashboard.png",
-      "lib/images/icons/lancamento.png"
+      "lib/images/icons/lancamento.png",
+      "lib/images/icons/config.png",
+      "lib/images/icons/scan.png",
     ];
     return Padding(
       padding: EdgeInsets.all(8),

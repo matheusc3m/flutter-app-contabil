@@ -33,6 +33,8 @@ dependencies:
   flutter_alert: ^0.4.0
   table_calendar: ^2.2.3
   rflutter_alert: ^1.0.3
+
+  translator: ^0.1.0+7
   
 
 
