@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class CadastroMei extends StatefulWidget {
   @override
   _CadastroMeiState createState() => _CadastroMeiState();
+  String titulo;
+  CadastroMei({this.titulo});
 }
 
 class _CadastroMeiState extends State<CadastroMei> {
@@ -11,7 +13,7 @@ class _CadastroMeiState extends State<CadastroMei> {
     return Scaffold(
       backgroundColor: Colors.deepPurple,
       appBar: AppBar(
-        title: Text("Cadastro de M.E.I"),
+        title: widget.titulo != null ? Text("Editar") : Text("Cadastrar"),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,

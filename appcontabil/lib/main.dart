@@ -1,6 +1,7 @@
 import 'package:appcontabil/models/user_model.dart';
 import 'package:appcontabil/pages/listagemFornecedor.dart';
 import 'package:appcontabil/ui/splash.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -32,7 +33,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.deepPurple,
         ),
-        //home: SplashScreen(),
         home: SplashScreen(),
       ),
     );

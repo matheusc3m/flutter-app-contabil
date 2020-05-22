@@ -1,6 +1,6 @@
 import 'package:appcontabil/animation/FadeAnimation.dart';
 import 'package:appcontabil/models/user_model.dart';
-import 'package:appcontabil/pages/mainPage.dart';
+import 'package:appcontabil/pages/homePage.dart';
 import 'package:appcontabil/pages/resetPass.page.dart';
 import 'package:appcontabil/pages/signUp.page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
       if (user != null) {
         _pass.text = '';
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MainPage()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }
       print('logado em ${user.uid}');
     } catch (e) {

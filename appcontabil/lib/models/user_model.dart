@@ -14,30 +14,31 @@ class UserModel extends Model {
   bool isLoading = false;
 
   void signUp(
-      {@required Map<String, dynamic> userData, @required String pass, @required VoidCallback onSucess,
+      {@required Map<String, dynamic> userData,
+      @required String pass,
+      @required VoidCallback onSucess,
       @required VoidCallback onFail}) {
     isLoading = true;
     notifyListeners();
 
-    _auth.createUserWithEmailAndPassword(
-      email: userData["email"], password: pass)
-    .then((user) async {
-
-      firebaseUser = user; 
+    _auth
+        .createUserWithEmailAndPassword(
+            email: userData["email"], password: pass)
+        .then((user) async {
+      firebaseUser = user;
 
       await _saveUserData(userData);
 
       onSucess();
       isLoading = false;
       notifyListeners();
-    })
-    .catchError((e) {
+    }).catchError((e) {
       onFail();
       isLoading = false;
       notifyListeners();
     });
   }
-  
+
   void recoverPass() {}
 
   // Salvar dados de Cadastro no banco NAO FUNCIONA AINDA
@@ -45,7 +46,10 @@ class UserModel extends Model {
   Future<Null> _saveUserData(Map<String, dynamic> userData) async {
     this.userData = userData;
 
-    await Firestore.instance.collection("users").document(firebaseUser.uid).setData(userData);
+    await Firestore.instance
+        .collection("users")
+        .document(firebaseUser.uid)
+        .setData(userData);
   }
 
   //Login com conta Google
@@ -68,4 +72,9 @@ class UserModel extends Model {
     } catch (error) {}
   }
 
+  void logout() async {
+    await FirebaseAuth.instance.signOut().then((_) {
+      print("deslogado");
+    });
+  }
 }
