@@ -2,6 +2,7 @@ import 'package:appcontabil/animation/FadeAnimation.dart';
 import 'package:appcontabil/models/user_model.dart';
 import 'package:appcontabil/pages/cadastroFornecedor.dart';
 import 'package:appcontabil/pages/cadastroMei.dart';
+import 'package:appcontabil/pages/dashboard.dart';
 import 'package:appcontabil/pages/listagemFornecedor.dart';
 import 'package:appcontabil/pages/listagemLancamento.dart';
 import 'package:appcontabil/pages/login.page.dart';
@@ -68,13 +69,18 @@ class HomePage extends StatelessWidget {
               return FadeAnimation(
                 1.2,
                 Card(
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () {
                       if (index == 1)
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ListaFornecedor()));
+                      else if (index == 2)
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DashboardPage()));
                       else if (index == 3)
                         Navigator.push(
                             context,

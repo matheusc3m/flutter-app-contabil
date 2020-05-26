@@ -21,7 +21,6 @@ class _CadastroMeiState extends State<CadastroMei> {
         child: SingleChildScrollView(
           padding: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.8,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25), color: Colors.white),
             child: Padding(

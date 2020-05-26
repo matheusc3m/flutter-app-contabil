@@ -14,6 +14,8 @@ class ListaFornecedor extends StatefulWidget {
 }
 
 class _ListaFornecedorState extends State<ListaFornecedor> {
+  var _searchKey = new TextEditingController();
+
   Fornecedor f = Fornecedor();
   List<Fornecedor> items;
   var db = Firestore.instance;
@@ -21,11 +23,16 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
   @override
   void initState() {
     super.initState();
+
     items = List();
     fornecedorInscricao?.cancel();
 
-    fornecedorInscricao =
-        db.collection("fornecedor").snapshots().listen((snapshot) {
+    fornecedorInscricao = db
+        .collection("fornecedor")
+        .where('razao social', isGreaterThan: "")
+        .where('razao social', isGreaterThanOrEqualTo: "Empresa C")
+        .snapshots()
+        .listen((snapshot) {
       final List<Fornecedor> fornecedores = snapshot.documents
           .map(
             (documentSnapshot) => Fornecedor.fromMap(
@@ -78,6 +85,12 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
             ? Text("Fornecedores (${items.length})")
             : TextField(
                 style: TextStyle(color: Colors.white, fontSize: 18),
+                onSubmitted: (value) {
+                  setState(() {
+                    _searchKey.text = value;
+                  });
+                },
+                controller: _searchKey,
                 decoration: InputDecoration(
                     hintText: "Pesquisar ",
                     hintStyle: TextStyle(color: Colors.white, fontSize: 20))),
