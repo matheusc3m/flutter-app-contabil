@@ -1,4 +1,5 @@
 import 'package:appcontabil/animation/FadeAnimation.dart';
+import 'package:appcontabil/models/lancamento_model.dart';
 import 'package:appcontabil/pages/cadastroLancamento.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -38,8 +39,11 @@ class _ListaLancamentoState extends State<ListaLancamento> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CadastroLancamento()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CadastroLancamento(
+                      Lancamento(descricao: "", valor: 0, id: null))));
         },
       ),
       appBar: AppBar(
@@ -101,11 +105,34 @@ class _ListaLancamentoState extends State<ListaLancamento> {
                         trailing: Wrap(
                           spacing: 10, // space between two icons
                           children: <Widget>[
-                            Icon(
-                              Icons.edit,
+                            InkWell(
+                              borderRadius: BorderRadius.circular(10),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            CadastroLancamento(
+                                                Lancamento(id: null))));
+                              },
+                              child: SizedBox(
+                                height: 40,
+                                width: 30,
+                                child: Icon(
+                                  Icons.edit,
+                                ),
+                              ),
                             ),
-                            Icon(
-                              Icons.delete_outline,
+                            InkWell(
+                              borderRadius: BorderRadius.circular(10),
+                              onTap: () {},
+                              child: SizedBox(
+                                height: 40,
+                                width: 30,
+                                child: Icon(
+                                  Icons.delete_forever,
+                                ),
+                              ),
                             ),
                           ],
                         ),

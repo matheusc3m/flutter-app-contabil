@@ -1,15 +1,33 @@
 import 'package:appcontabil/animation/FadeAnimation.dart';
+import 'package:appcontabil/models/lancamento_model.dart';
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_radio_button_group/flutter_radio_button_group.dart';
 
 class CadastroLancamento extends StatefulWidget {
+  final Lancamento lancamento;
+  CadastroLancamento(this.lancamento);
   @override
   _CadastroLancamentoState createState() => _CadastroLancamentoState();
 }
 
 class _CadastroLancamentoState extends State<CadastroLancamento> {
   DateTime selectedDate;
+  Lancamento l = Lancamento();
+  bool tipo = true;
+  var _descricaoController = TextEditingController();
+
+  var _valorController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    _descricaoController =
+        new TextEditingController(text: widget.lancamento.descricao);
+
+    _valorController =
+        TextEditingController(text: widget.lancamento.valor.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +72,7 @@ class _CadastroLancamentoState extends State<CadastroLancamento> {
                     FadeAnimation(
                       0.3,
                       TextFormField(
+                        controller: _descricaoController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
@@ -68,6 +87,7 @@ class _CadastroLancamentoState extends State<CadastroLancamento> {
                     FadeAnimation(
                       0.4,
                       TextFormField(
+                        controller: _valorController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
@@ -111,6 +131,8 @@ class _CadastroLancamentoState extends State<CadastroLancamento> {
                           ],
                           onSelected: (String selected) {
                             print("Selected: $selected");
+                            if (selected == "Receita") tipo = true;
+                            if (selected == "Despesa") tipo = false;
                           }),
                     ),
                     FadeAnimation(
@@ -121,7 +143,14 @@ class _CadastroLancamentoState extends State<CadastroLancamento> {
                           "Salvar",
                           style: TextStyle(color: Colors.white),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          l.addLancamento(
+                              selectedDate,
+                              _descricaoController.text,
+                              tipo,
+                              double.parse(_valorController.text),
+                              null);
+                        },
                       ),
                     ),
                   ],
