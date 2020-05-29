@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:appcontabil/animation/FadeAnimation.dart';
 import 'package:appcontabil/models/lancamento_model.dart';
 import 'package:appcontabil/pages/cadastroLancamento.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +14,38 @@ class ListaLancamento extends StatefulWidget {
 }
 
 class _ListaLancamentoState extends State<ListaLancamento> {
+  Lancamento l = Lancamento();
+  List<Lancamento> items;
+  var db = Firestore.instance;
+  StreamSubscription<QuerySnapshot> lancamentoInscricao;
+  @override
+  void initState() {
+    super.initState();
+    calendarController = CalendarController();
+    items = List();
+    lancamentoInscricao?.cancel();
+
+    lancamentoInscricao =
+        db.collection("lancamento").snapshots().listen((snapshot) {
+      final List<Lancamento> lancamentos = snapshot.documents
+          .map(
+            (documentSnapshot) => Lancamento.fromMap(
+                documentSnapshot.data, documentSnapshot.documentID),
+          )
+          .toList();
+      setState(() {
+        this.items = lancamentos;
+        print(items.length);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    lancamentoInscricao?.cancel();
+    super.dispose();
+  }
+
   var lista = [
     "Aluguel",
     "Venda de Produto",
@@ -26,12 +61,6 @@ class _ListaLancamentoState extends State<ListaLancamento> {
   var formatterCalendar = new DateFormat('MM-yyyy');
   CalendarController calendarController;
   String dataFormatada;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    calendarController = CalendarController();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,62 +120,59 @@ class _ListaLancamentoState extends State<ListaLancamento> {
               height: 10,
             ),
             Expanded(
-              child: ListView.builder(
-                padding:
-                    EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 80),
-                itemCount: lista.length,
-                itemBuilder: (context, i) {
-                  return FadeAnimation(
-                    0.4,
-                    Card(
-                      color: cor[i] == false ? Colors.red[300] : Colors.green,
-                      child: ListTile(
-                        leading: Icon(Icons.monetization_on),
-                        trailing: Wrap(
-                          spacing: 10, // space between two icons
-                          children: <Widget>[
-                            InkWell(
-                              borderRadius: BorderRadius.circular(10),
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            CadastroLancamento(
-                                                Lancamento(id: null))));
-                              },
-                              child: SizedBox(
-                                height: 40,
-                                width: 30,
-                                child: Icon(
-                                  Icons.edit,
+              child: StreamBuilder<QuerySnapshot>(
+                  /*meus dados*/ stream: l.getListaLancamentos(),
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.none:
+                      case ConnectionState.waiting:
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      default:
+                        List<DocumentSnapshot> documentos =
+                            snapshot.data.documents;
+                        return ListView.builder(
+                          padding: EdgeInsets.only(
+                              top: 0, left: 10, right: 10, bottom: 80),
+                          itemCount: items.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return FadeAnimation(
+                              0.4,
+                              Card(
+                                color: items[index].tipo == false
+                                    ? Colors.red[300]
+                                    : Colors.green,
+                                child: ListTile(
+                                  leading: Icon(Icons.monetization_on),
+                                  trailing: Wrap(
+                                    spacing: 10, // space between two icons
+                                    children: <Widget>[
+                                      IconButton(
+                                        padding: EdgeInsets.all(0),
+                                        icon: Icon(Icons.edit),
+                                        onPressed: () {},
+                                      ),
+                                      IconButton(
+                                        padding: EdgeInsets.all(0),
+                                        icon: Icon(Icons.delete_forever),
+                                        onPressed: () {},
+                                      ),
+                                    ],
+                                  ),
+                                  title: Text(
+                                    items[index].descricao,
+                                    style: TextStyle(
+                                        color: Colors.white60,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
-                            ),
-                            InkWell(
-                              borderRadius: BorderRadius.circular(10),
-                              onTap: () {},
-                              child: SizedBox(
-                                height: 40,
-                                width: 30,
-                                child: Icon(
-                                  Icons.delete_forever,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        title: Text(
-                          lista[i],
-                          style: TextStyle(
-                              color: Colors.white60,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+                            );
+                          },
+                        );
+                    }
+                  }),
             ),
           ],
         ),

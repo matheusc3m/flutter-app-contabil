@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Lancamento {
-  DateTime date;
+  Timestamp date;
   String descricao;
   bool tipo;
   double valor;
@@ -25,8 +25,19 @@ class Lancamento {
     return data;
   }
 
+  Lancamento.fromMap(Map<String, dynamic> map, String id) {
+    this.date = map["date"];
+    this.descricao = map["descricao"];
+    this.tipo = map["tipo"];
+    this.valor = map["valor"];
+    this.id = id ?? '';
+  }
+  Stream<QuerySnapshot> getListaLancamentos() {
+    return Firestore.instance.collection("lancamento").snapshots();
+  }
+
   addLancamento(
-      DateTime date, String descricao, bool tipo, double valor, String id) {
+      Timestamp date, String descricao, bool tipo, double valor, String id) {
     if (id != null) {
       Lancamento l = Lancamento(
           date: date, descricao: descricao, tipo: tipo, valor: valor);

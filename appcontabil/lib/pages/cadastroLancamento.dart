@@ -1,5 +1,6 @@
 import 'package:appcontabil/animation/FadeAnimation.dart';
 import 'package:appcontabil/models/lancamento_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_radio_button_group/flutter_radio_button_group.dart';
@@ -145,7 +146,7 @@ class _CadastroLancamentoState extends State<CadastroLancamento> {
                         ),
                         onPressed: () {
                           l.addLancamento(
-                              selectedDate,
+                              Timestamp.fromDate(selectedDate),
                               _descricaoController.text,
                               tipo,
                               double.parse(_valorController.text),
