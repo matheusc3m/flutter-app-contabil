@@ -57,9 +57,9 @@ class _DashboardPageState extends State<DashboardPage> {
       } else if (element.tipo == false) {
         totalDespesa += element.valor;
       }
-      total += element.valor;
     });
     print(totalReceita);
+    total = totalReceita - totalDespesa;
     var array = [
       "$total",
       "$totalDespesa",
@@ -73,51 +73,70 @@ class _DashboardPageState extends State<DashboardPage> {
       appBar: AppBar(
         title: Text("Dashboard"),
       ),
-      body: GridView.builder(
-          padding: EdgeInsets.all(10),
-          itemCount: array.length,
-          gridDelegate: (SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
-            childAspectRatio: MediaQuery.of(context).size.width /
-                (MediaQuery.of(context).size.height / 4.3),
-          )),
-          itemBuilder: (BuildContext context, int index) {
-            return FadeAnimation(
-              1.2,
-              Card(
-                color: _getMyColor(tipo[index]),
-                child: InkWell(
-                  onTap: () {},
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.01),
-                      Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Text(
-                          menu[index],
-                          style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.03,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                              height: 1.2),
-                          textAlign: TextAlign.center,
+      body: Column(
+        children: <Widget>[
+          Card(
+            child: ListTile(
+              subtitle: _getText(total),
+              title: Center(
+                  child: Text(
+                "Nesse mês sua empresa obteve ",
+                style: TextStyle(
+                    fontWeight: FontWeight.w800, color: Colors.deepPurple),
+              )),
+            ),
+          ),
+          Expanded(
+            child: GridView.builder(
+                padding: EdgeInsets.all(10),
+                itemCount: array.length,
+                gridDelegate: (SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1,
+                  childAspectRatio: MediaQuery.of(context).size.width /
+                      (MediaQuery.of(context).size.height / 4.3),
+                )),
+                itemBuilder: (BuildContext context, int index) {
+                  return FadeAnimation(
+                    1.2,
+                    Card(
+                      color: _getMyColor(tipo[index]),
+                      child: InkWell(
+                        onTap: () {},
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.01),
+                            Padding(
+                              padding: EdgeInsets.all(20),
+                              child: Text(
+                                menu[index],
+                                style: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.height *
+                                            0.03,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.2),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Text(
+                              "R\$ ${array[index]}",
+                              style: TextStyle(
+                                  fontSize: 19,
+                                  color: Colors.white60,
+                                  fontWeight: FontWeight.w700),
+                            )
+                          ],
                         ),
                       ),
-                      Text(
-                        "R\$ ${array[index]}",
-                        style: TextStyle(
-                            fontSize: 19,
-                            color: Colors.white60,
-                            fontWeight: FontWeight.w700),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }),
+                    ),
+                  );
+                }),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -129,4 +148,28 @@ Color _getMyColor(var tipo) {
     return Colors.redAccent;
   } else
     return Colors.grey;
+}
+
+Widget _getText(numero) {
+  if (numero < 0)
+    return Text(
+      "PREJUÍZO",
+      textAlign: TextAlign.center,
+      style: TextStyle(
+          fontSize: 17, color: Colors.red, fontWeight: FontWeight.w800),
+    );
+  if (numero > 0)
+    return Text(
+      "LUCRO",
+      textAlign: TextAlign.center,
+      style: TextStyle(
+          fontSize: 17, color: Colors.green, fontWeight: FontWeight.w800),
+    );
+  if (numero == 0)
+    return Text(
+      "Equilíbrio entre Receitas e Despesas",
+      textAlign: TextAlign.center,
+      style: TextStyle(
+          fontSize: 17, color: Colors.grey, fontWeight: FontWeight.w800),
+    );
 }
