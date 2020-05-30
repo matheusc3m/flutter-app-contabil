@@ -14,19 +14,47 @@ class ListaLancamento extends StatefulWidget {
 }
 
 class _ListaLancamentoState extends State<ListaLancamento> {
+  Future retornaFuture() async {
+    var firestore = Firestore.instance;
+    QuerySnapshot qn;
+    if (dataInicial != null) {
+      qn = await firestore
+          .collection("lancamento")
+          .where("date",
+              isGreaterThanOrEqualTo: Timestamp.fromDate(dataInicial))
+          .where("date",
+              isLessThanOrEqualTo: Timestamp.fromDate(dataFinal.toUtc()))
+          .getDocuments();
+    } else {
+      qn = await firestore
+          .collection("lancamento")
+          .where("date", isLessThanOrEqualTo: Timestamp.fromDate(dataAtual))
+          .getDocuments();
+    }
+    return qn;
+  }
+
   Lancamento l = Lancamento();
   List<Lancamento> items;
   var db = Firestore.instance;
   StreamSubscription<QuerySnapshot> lancamentoInscricao;
   @override
   void initState() {
+    dataInicial = new DateTime(dataAtual.year, (dataAtual.month), 1, 0);
+    dataFinal = new DateTime(dataAtual.year, (dataAtual.month + 1), 0);
+    print("DataFinal $dataFinal");
+    print("DataInicial $dataInicial");
     super.initState();
     calendarController = CalendarController();
     items = List();
     lancamentoInscricao?.cancel();
 
-    lancamentoInscricao =
-        db.collection("lancamento").snapshots().listen((snapshot) {
+    lancamentoInscricao = db
+        .collection("lancamento")
+        .where("date", isGreaterThanOrEqualTo: Timestamp.fromDate(data))
+        .where("date", isLessThan: Timestamp.fromDate(dataAtual))
+        .snapshots()
+        .listen((snapshot) {
       final List<Lancamento> lancamentos = snapshot.documents
           .map(
             (documentSnapshot) => Lancamento.fromMap(
@@ -57,10 +85,15 @@ class _ListaLancamentoState extends State<ListaLancamento> {
     false,
   ];
   var dataAtual = new DateTime.now();
+
+  var data = DateTime.parse("2020-03-01 12:00:00.000Z");
+
   var formatter = new DateFormat('dd-MM-yyyy');
   var formatterCalendar = new DateFormat('MM-yyyy');
   CalendarController calendarController;
   String dataFormatada;
+  var dataInicial;
+  DateTime dataFinal;
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +136,10 @@ class _ListaLancamentoState extends State<ListaLancamento> {
               initialCalendarFormat: CalendarFormat.month,
               onVisibleDaysChanged: (dateFirst, dateLast, CalendarFormat cf) {
                 print(dateFirst);
+                setState(() {
+                  dataInicial = dateFirst;
+                  dataFinal = dateLast;
+                });
 
                 dataFormatada = formatterCalendar.format(dateFirst);
                 // _allMovMes(dataFormatada);
@@ -120,8 +157,8 @@ class _ListaLancamentoState extends State<ListaLancamento> {
               height: 10,
             ),
             Expanded(
-              child: StreamBuilder<QuerySnapshot>(
-                  /*meus dados*/ stream: l.getListaLancamentos(),
+              child: FutureBuilder(
+                  /*meus dados*/ future: retornaFuture(),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:
@@ -135,12 +172,13 @@ class _ListaLancamentoState extends State<ListaLancamento> {
                         return ListView.builder(
                           padding: EdgeInsets.only(
                               top: 0, left: 10, right: 10, bottom: 80),
-                          itemCount: items.length,
+                          itemCount: snapshot.data.documents.length,
                           itemBuilder: (BuildContext context, int index) {
                             return FadeAnimation(
                               0.4,
                               Card(
-                                color: items[index].tipo == false
+                                color: snapshot.data.documents[index]["tipo"] ==
+                                        false
                                     ? Colors.red[300]
                                     : Colors.green,
                                 child: ListTile(
@@ -161,7 +199,7 @@ class _ListaLancamentoState extends State<ListaLancamento> {
                                     ],
                                   ),
                                   title: Text(
-                                    items[index].descricao,
+                                    snapshot.data.documents[index]["descricao"],
                                     style: TextStyle(
                                         color: Colors.white60,
                                         fontWeight: FontWeight.bold),
