@@ -44,7 +44,6 @@ class _DashboardPageState extends State<DashboardPage> {
           .where("date",
               isLessThanOrEqualTo: Timestamp.fromDate(dataFinal.toUtc()))
           .getDocuments();
-      qn.documents.asMap();
     } else {
       qn = await firestore
           .collection("lancamento")
@@ -110,11 +109,7 @@ class _DashboardPageState extends State<DashboardPage> {
     });
     print(totalReceita);
     total = totalReceita - totalDespesa;
-    var array = [
-      "$total",
-      "$totalDespesa",
-      "$totalReceita",
-    ];
+
     var menu = ["Total do Mês", "Despesas do Mês", "Receitas do Mês"];
 
     var tipo = ["b", "d", "r"];
@@ -125,17 +120,6 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       body: Column(
         children: <Widget>[
-          Card(
-            child: ListTile(
-              subtitle: _getText(total),
-              title: Center(
-                  child: Text(
-                "Nesse mês sua empresa obteve ",
-                style: TextStyle(
-                    fontWeight: FontWeight.w800, color: Colors.deepPurple),
-              )),
-            ),
-          ),
           TableCalendar(
             calendarController: calendarController,
             locale: "pt_BR",
@@ -165,6 +149,20 @@ class _DashboardPageState extends State<DashboardPage> {
               //print("Data Inicial: $dateFirst ....... Data Final: $dateLast");
             },
           ),
+          FadeAnimation(
+            1.3,
+            Card(
+              child: ListTile(
+                subtitle: _getText(total),
+                title: Center(
+                    child: Text(
+                  "Nesse mês sua empresa obteve ",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w800, color: Colors.deepPurple),
+                )),
+              ),
+            ),
+          ),
           Expanded(
             child: FutureBuilder(
                 /*meus dados*/ future: retornaFuture(),
@@ -178,6 +176,23 @@ class _DashboardPageState extends State<DashboardPage> {
                     default:
                       List<DocumentSnapshot> documentos =
                           snapshot.data.documents;
+                      totalDespesa = 0;
+                      totalReceita = 0;
+                      documentos.forEach((element) {
+                        if (element["tipo"] == true) {
+                          totalReceita += element["valor"];
+                        } else if (element["tipo"] == false) {
+                          totalDespesa += element["valor"];
+                          print(totalDespesa);
+                        }
+                      });
+                      total = totalReceita - totalDespesa;
+                      var array = [
+                        "$total",
+                        "$totalDespesa",
+                        "$totalReceita",
+                      ];
+
                       return GridView.builder(
                           padding: EdgeInsets.all(10),
                           itemCount: array.length,
@@ -186,11 +201,11 @@ class _DashboardPageState extends State<DashboardPage> {
                             crossAxisCount: 1,
                             childAspectRatio:
                                 MediaQuery.of(context).size.width /
-                                    (MediaQuery.of(context).size.height / 4.3),
+                                    (MediaQuery.of(context).size.height / 5.1),
                           )),
                           itemBuilder: (BuildContext context, int index) {
                             return FadeAnimation(
-                              1.2,
+                              1.5,
                               Card(
                                 color: _getMyColor(tipo[index]),
                                 child: InkWell(
