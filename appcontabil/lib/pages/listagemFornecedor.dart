@@ -15,6 +15,20 @@ class ListaFornecedor extends StatefulWidget {
 
 class _ListaFornecedorState extends State<ListaFornecedor> {
   var _searchKey = new TextEditingController();
+  bool isSearching = false;
+  Future retornaFuture() async {
+    var firestore = Firestore.instance;
+    QuerySnapshot qn;
+    if (isSearching == true) {
+      qn = await firestore
+          .collection("fornecedor")
+          .where("razao social", isGreaterThanOrEqualTo: _searchKey.text)
+          .getDocuments();
+    } else {
+      qn = await firestore.collection("fornecedor").getDocuments();
+    }
+    return qn;
+  }
 
   Fornecedor f = Fornecedor();
   List<Fornecedor> items;
@@ -29,8 +43,7 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
 
     fornecedorInscricao = db
         .collection("fornecedor")
-        .where('razao social', isGreaterThan: "")
-        .where('razao social', isGreaterThanOrEqualTo: "Empresa C")
+        .where('razao social', isEqualTo: "Empresa D")
         .snapshots()
         .listen((snapshot) {
       final List<Fornecedor> fornecedores = snapshot.documents
@@ -51,14 +64,13 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
     super.dispose();
   }
 
-  bool isSearching = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.deepPurple,
       appBar: AppBar(
-        title: isSearching
-            ? Text("Fornecedores (${items.length})")
+        title: isSearching == false
+            ? Text("Fornecedores")
             : TextField(
                 style: TextStyle(color: Colors.white, fontSize: 18),
                 onSubmitted: (value) {
@@ -72,7 +84,8 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
                     hintStyle: TextStyle(color: Colors.white, fontSize: 20))),
         actions: <Widget>[
           IconButton(
-            icon: isSearching ? Icon(Icons.search) : Icon(Icons.cancel),
+            icon:
+                isSearching == false ? Icon(Icons.search) : Icon(Icons.cancel),
             onPressed: () {
               setState(() {
                 isSearching = !isSearching;
@@ -104,8 +117,8 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(color: Colors.white70),
-        child: StreamBuilder<QuerySnapshot>(
-            /*meus dados*/ stream: f.getListaFornecedores(),
+        child: FutureBuilder(
+            /*meus dados*/ future: retornaFuture(),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
@@ -117,7 +130,7 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
                   List<DocumentSnapshot> documentos = snapshot.data.documents;
                   return ListView.builder(
                     padding: EdgeInsets.only(bottom: 80, left: 10, right: 10),
-                    itemCount: items.length,
+                    itemCount: snapshot.data.documents.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
@@ -145,13 +158,15 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
                             content: Column(
                               children: <Widget>[
                                 getRowAlert("Razão social",
-                                    "${items[index].razaoSocial}"),
-                                getRowAlert("Cnpj", "${items[index].cnpj}"),
+                                    "${documentos[index]["razao social"]}"),
                                 getRowAlert(
-                                    "Endereço", "${items[index].endereco}"),
+                                    "Cnpj", "${documentos[index]["cnpj"]}"),
+                                getRowAlert("Endereço",
+                                    "${documentos[index]["endereco"]}"),
+                                getRowAlert("Telefone",
+                                    "${documentos[index]["telefone"]}"),
                                 getRowAlert(
-                                    "Telefone", "${items[index].telefone}"),
-                                getRowAlert("Email", "${items[index].email}")
+                                    "Email", "${documentos[index]["email"]}")
                               ],
                             ),
                             buttons: [
@@ -175,8 +190,8 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
                             children: <Widget>[
                               ListTile(
                                 leading: Icon(Icons.account_circle, size: 60),
-                                title: Text(items[index].razaoSocial),
-                                subtitle: Text(items[index].cnpj),
+                                title: Text(documentos[index]["razao social"]),
+                                subtitle: Text(documentos[index]["cnpj"]),
                                 trailing: Wrap(
                                   spacing: 2, // space between two icons
                                   children: <Widget>[
@@ -190,17 +205,22 @@ class _ListaFornecedorState extends State<ListaFornecedor> {
                                                     CadastroFornecedor(
                                                       Fornecedor(
                                                           cnpj:
-                                                              items[index].cnpj,
-                                                          razaoSocial:
-                                                              items[index]
-                                                                  .razaoSocial,
-                                                          endereco: items[index]
-                                                              .endereco,
-                                                          email: items[index]
-                                                              .email,
-                                                          telefone: items[index]
-                                                              .telefone,
-                                                          id: items[index].id),
+                                                              documentos[index]
+                                                                  ["cnpj"],
+                                                          razaoSocial: documentos[
+                                                                  index]
+                                                              ["razao social"],
+                                                          endereco:
+                                                              documentos[index]
+                                                                  ["endereco"],
+                                                          email:
+                                                              documentos[index]
+                                                                  ["email"],
+                                                          telefone:
+                                                              documentos[index]
+                                                                  ["telefone"],
+                                                          id: documentos[index]
+                                                              .documentID),
                                                     )));
                                       },
                                       icon: const Icon(Icons.edit),
