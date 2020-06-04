@@ -6,6 +6,7 @@ import 'package:appcontabil/pages/dashboard.dart';
 import 'package:appcontabil/pages/listagemFornecedor.dart';
 import 'package:appcontabil/pages/listagemLancamento.dart';
 import 'package:appcontabil/pages/login.page.dart';
+import 'package:appcontabil/pages/sobre.dart';
 
 import 'package:flutter/material.dart';
 
@@ -138,11 +139,15 @@ CustomListTile(
                     builder: (context) => CadastroMei(
                           titulo: "Editar",
                         )));
-            if (pagina == "logout") {
-              UserModel usuario;
+          }
+          if (pagina == "logout") {
+            UserModel usuario;
 
-              usuario.logout();
-            }
+            usuario.logout();
+          }
+          if (pagina == "sobre") {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => SobrePage()));
           }
         },
         child: Container(
