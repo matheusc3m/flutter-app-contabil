@@ -6,6 +6,7 @@ import 'package:appcontabil/pages/dashboard.dart';
 import 'package:appcontabil/pages/listagemFornecedor.dart';
 import 'package:appcontabil/pages/listagemLancamento.dart';
 import 'package:appcontabil/pages/login.page.dart';
+import 'package:appcontabil/pages/qrPage.dart';
 import 'package:appcontabil/pages/sobre.dart';
 
 import 'package:flutter/material.dart';
@@ -92,6 +93,11 @@ class HomePage extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => CadastroMei()));
+                      else if (index == 5)
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => QRViewExample()));
                     },
                     child: Column(
                       children: <Widget>[
