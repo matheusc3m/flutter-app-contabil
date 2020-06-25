@@ -240,29 +240,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           Row(
                             children: <Widget>[
-                              Expanded(
-                                child: FadeAnimation(
-                                    1.8,
-                                    Container(
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          color: Colors.blue),
-                                      child: FlatButton(
-                                        child: SizedBox(
-                                          width: double.infinity,
-                                          child: Text("Facebook",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                              textAlign: TextAlign.center),
-                                        ),
-                                        onPressed: () {},
-                                      ),
-                                    )),
-                              ),
                               SizedBox(
                                 width: 20,
                               ),

@@ -15,20 +15,16 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var services = [
-      "Cadastro de Mei",
       "Fornecedores",
       "Dashboard",
       "Lançamentos",
-      "Editar Dados",
-      "OCR"
+      "Consultar NFCE na receita"
     ];
     var images = [
-      "lib/images/icons/mei.png",
       "lib/images/icons/fornecedor.png",
       "lib/images/icons/dashboard.png",
       "lib/images/icons/lancamento.png",
-      "lib/images/icons/config.png",
-      "lib/images/icons/scan.png",
+      "lib/images/icons/qrcode.png",
     ];
     return Scaffold(
       backgroundColor: Color(0xFFF0F0F0),
@@ -65,7 +61,7 @@ class HomePage extends StatelessWidget {
             gridDelegate: (SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: MediaQuery.of(context).size.width /
-                  (MediaQuery.of(context).size.height / 2.3),
+                  (MediaQuery.of(context).size.height / 2),
             )),
             itemBuilder: (BuildContext context, int index) {
               return FadeAnimation(
@@ -73,27 +69,22 @@ class HomePage extends StatelessWidget {
                 Card(
                   child: InkWell(
                     onTap: () {
-                      if (index == 1)
+                      if (index == 0)
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ListaFornecedor()));
-                      else if (index == 2)
+                      else if (index == 1)
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DashboardPage()));
-                      else if (index == 3)
+                      else if (index == 2)
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ListaLancamento()));
-                      else if (index == 0)
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CadastroMei()));
-                      else if (index == 5)
+                      else if (index == 3)
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -109,11 +100,11 @@ class HomePage extends StatelessWidget {
                           child: Text(
                             services[index],
                             style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.height * 0.02,
-                                color: Colors.deepPurple,
-                                fontWeight: FontWeight.bold,
-                                height: 1.2),
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.025,
+                              color: Colors.deepPurple,
+                              fontWeight: FontWeight.w700,
+                            ),
                             textAlign: TextAlign.center,
                           ),
                         ),
