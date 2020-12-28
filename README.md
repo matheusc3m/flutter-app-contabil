@@ -2,6 +2,7 @@
 Software Contábil para MEI
 
 > Este é um aplicativo de controle financeiro para MEI, feito em flutter e firebase.
+Esse projeto foi refatorado: no seguinte repositório https://github.com/mateusmoreira21/ea_assistant
 
 
 
